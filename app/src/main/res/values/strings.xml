@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MensaHAW</string>
+    <string name="wilkommen_bei_easy_mensa">Willkommen bei Easy Mensa</string>
+    <string name="teller_rauf">Teller rauf</string>
+    <string name="geld_hinaus">Geld hinaus</string>
+    <string name="essen_im_bauch">Essen im Bauch</string>
+    <string name="loslegen">Loslegen</string>
 </resources>
