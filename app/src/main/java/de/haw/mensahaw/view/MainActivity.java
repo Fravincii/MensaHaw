@@ -1,4 +1,4 @@
-package de.haw.mensahaw;
+package de.haw.mensahaw.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +12,9 @@ import com.budiyev.android.codescanner.DecodeCallback;
 
 import java.nio.charset.StandardCharsets;
 
-import javax.xml.transform.Result;
+import de.haw.mensahaw.model.Log;
+import de.haw.mensahaw.model.MqttClient;
+import de.haw.mensahaw.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -20,16 +20,16 @@
         android:theme="@style/Theme.MensaHAW"
         tools:targetApi="31">
         <activity
-            android:name=".CheckoutActivity"
+            android:name=".view.CheckoutActivity"
             android:exported="false" />
         <activity
-            android:name=".ProcessDescriptionActivity"
+            android:name=".view.ProcessDescriptionActivity"
             android:exported="false" />
         <activity
-            android:name=".ScanActivity"
+            android:name=".view.ScanActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

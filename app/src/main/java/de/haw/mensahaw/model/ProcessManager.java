@@ -1,4 +1,4 @@
-package de.haw.mensahaw;
+package de.haw.mensahaw.model;
 
 public class ProcessManager {
 

@@ -1,4 +1,4 @@
-package de.haw.mensahaw;
+package de.haw.mensahaw.model;
 
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
 import com.hivemq.client.mqtt.mqtt3.message.publish.Mqtt3Publish;
