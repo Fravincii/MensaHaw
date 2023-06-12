@@ -4,7 +4,6 @@ import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
 import com.hivemq.client.mqtt.mqtt3.message.publish.Mqtt3Publish;
 import com.hivemq.client.mqtt.mqtt3.message.unsubscribe.Mqtt3Unsubscribe;
 
-
 import java.util.function.Consumer;
 
 public class MqttClient {
@@ -46,7 +45,13 @@ public class MqttClient {
             }
         });
     }
-
+    public void publish(String topic, Float message) {
+        client.publishWith().topic(topic).payload(message.toString().getBytes()).send().whenComplete((publish, throwable) -> {
+            if (throwable != null) {
+                throwable.printStackTrace();
+            }
+        });
+    }
     public void unsubscribe(String topic) {
         client.unsubscribe(Mqtt3Unsubscribe.builder().topicFilter(topic).build());
         Log.info(String.format("Unsubscribed from '%s'", topic));

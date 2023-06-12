@@ -33,6 +33,8 @@ android {
 
 dependencies {
 
+    implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
+
     implementation(platform"com.hivemq:hivemq-mqtt-client-websocket:1.3.0")
     implementation(platform"com.hivemq:hivemq-mqtt-client-proxy:1.3.0")
     implementation(platform"com.hivemq:hivemq-mqtt-client-epoll:1.3.0")
