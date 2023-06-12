@@ -14,4 +14,5 @@
     <string name="preis">Preis</string>
     <string name="gewicht">Gewicht</string>
     <string name="scanner">scanner</string>
+    <string name="gewichtetes_tagesgericht">Gewichtetes Tagesgericht</string>
 </resources>
