@@ -26,13 +26,13 @@
             android:name=".view.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.WeightingInputActivity"
             android:exported="false" />
         <activity
             android:name=".view.CheckoutConfirmationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.ScanActivity"
             android:exported="false" />
         <activity
             android:name=".view.ProcessDescriptionActivity"

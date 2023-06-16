@@ -12,6 +12,7 @@ import de.haw.mensahaw.model.Log;
 
 public class ProcessDescriptionActivity extends AppCompatActivity {
     private Button startButton;
+    private Button devButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +25,20 @@ public class ProcessDescriptionActivity extends AppCompatActivity {
                 openWeightingView();
             }
         });
+
+        devButton = findViewById(R.id.developerbutton);
+        devButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                openQR();
+            }
+        });
     }
     public void openWeightingView(){
         Intent changeView = new Intent(this, WeightingInputActivity.class);
+        startActivity(changeView);
+    }
+    public void openQR(){
+        Intent changeView = new Intent(this, ScanActivity.class);
         startActivity(changeView);
     }
 }
