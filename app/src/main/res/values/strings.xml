@@ -15,4 +15,6 @@
     <string name="gewicht">Gewicht</string>
     <string name="scanner">scanner</string>
     <string name="gewichtetes_tagesgericht">Gewichtetes Tagesgericht</string>
+    <string name="zahlung_erfolgreich">Zahlung Erfolgreich!</string>
+    <string name="button">Zurück zum Start</string>
 </resources>

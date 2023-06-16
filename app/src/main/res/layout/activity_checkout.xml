@@ -70,7 +70,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/bezahlbutton"
+        android:id="@+id/paybutton"
         android:layout_width="183dp"
         android:layout_height="74dp"
         android:backgroundTint="#FF9800"
@@ -84,17 +84,17 @@
         app:layout_constraintVertical_bias="0.492" />
 
     <Button
-        android:id="@+id/abbruchbutton"
+        android:id="@+id/cancelbutton"
         android:layout_width="183dp"
         android:layout_height="74dp"
         android:backgroundTint="#B1271C"
         android:text="@string/abbrechen"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/bezahlbutton"
-        app:layout_constraintEnd_toStartOf="@+id/bezahlbutton"
+        app:layout_constraintBottom_toBottomOf="@+id/paybutton"
+        app:layout_constraintEnd_toStartOf="@+id/paybutton"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bezahlbutton"
+        app:layout_constraintTop_toTopOf="@+id/paybutton"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView

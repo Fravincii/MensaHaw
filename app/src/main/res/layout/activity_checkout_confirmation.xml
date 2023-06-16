@@ -9,10 +9,10 @@
         android:id="@+id/imageView"
         android:layout_width="322dp"
         android:layout_height="287dp"
-        android:layout_marginBottom="268dp"
+        android:layout_marginBottom="208dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintHorizontal_bias="0.64"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/checkbox" />
 
@@ -20,28 +20,30 @@
         android:id="@+id/checkoutconfirmation"
         android:layout_width="330dp"
         android:layout_height="169dp"
-        android:text="Zahlung Erfolgreich!"
+        android:text="@string/zahlung_erfolgreich"
         android:textAlignment="center"
         android:textSize="60sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/backtomenu"
         android:layout_width="258dp"
         android:layout_height="116dp"
-        android:text="Button"
+
+        android:backgroundTint="#FF9800"
+        android:text="@string/button"
         android:textAlignment="center"
-        android:textSize="48sp"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.869" />
+        app:layout_constraintVertical_bias="0.881" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

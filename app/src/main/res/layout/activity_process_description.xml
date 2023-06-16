@@ -175,14 +175,15 @@
 
     <Button
         android:id="@+id/developerbutton"
-        android:layout_width="106dp"
-        android:layout_height="39dp"
-        android:text="@string/scanner"
+        android:layout_width="201dp"
+        android:layout_height="63dp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.958"
+        app:layout_constraintHorizontal_bias="0.738"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startingbuttonshadow"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/welcomeText"
+        app:layout_constraintVertical_bias="0.049" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
