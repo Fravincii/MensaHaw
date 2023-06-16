@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">MensaHAW</string>
+    <string name="wilkommen_bei_easy_mensa">Willkommen bei Easy Mensa</string>
+    <string name="teller_rauf">Teller rauf</string>
+    <string name="geld_hinaus">Geld hinaus</string>
+    <string name="essen_im_bauch">Essen im Bauch</string>
+    <string name="loslegen">Loslegen</string>
+    <string name="teller_ist_drauf">Teller ist drauf!</string>
+    <string name="platziere_deinen_teller_auf_die_waage_und_dr_cke_denn_knopf">Platziere deinen Teller auf die Waage und drücke denn Knopf.</string>
+    <string name="abbrechen">Abbrechen</string>
+    <string name="bezahlen">Bezahlen</string>
+    <string name="_22_43">22.43€</string>
+    <string name="_260_kg">260 Kg</string>
+    <string name="preis">Preis</string>
+    <string name="gewicht">Gewicht</string>
+    <string name="scanner">scanner</string>
+    <string name="gewichtetes_tagesgericht">Gewichtetes Tagesgericht</string>
+    <string name="zahlung_erfolgreich">Zahlung Erfolgreich!</string>
+    <string name="button">Zurück zum Start</string>
 </resources>
