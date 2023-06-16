@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import de.haw.mensahaw.model.MQTTManager;
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -11,7 +13,21 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void connectToServer_withoutClient_isTrue() {
+        MQTTManager mqttManager = new MQTTManager();
+
+        assertEquals(true, mqttManager.connectToServer());
+    }
+
+    @Test
+    public void connectToServer_withClient_isFalse() {
+        MQTTManager mqttManager = new MQTTManager();
+        mqttManager.connectToServer();
+
+        assertEquals(false, mqttManager.connectToServer());
+    }
+    @Test
+    public void dishManagerInit_currentDishesSize_isThree() {
+
     }
 }

@@ -8,4 +8,5 @@ public class Log {
         android.util.Log.d("LOL", string + ", " + value.toString());
     }
     public static void error(String string) {android.util.Log.w("LOL", string);}
+
 }
