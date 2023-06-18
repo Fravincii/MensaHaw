@@ -11,7 +11,7 @@ public class QRCodeManager {
         mqttManager.connectToLocalServer();
     }
 
-    public void SendQRCode(String qrCode){
+    public void sendQRCode(String qrCode){
         mqttManager.publishQRCode(qrCode);
     }
     public void endconnection(){

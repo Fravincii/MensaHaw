@@ -7,23 +7,17 @@ import java.util.List;
 
 public class ProcessManager {
     private MQTTManager mqttManager;
-    private DishManager dishManager;
-    public void startApp(){
-
-    }
 
     //Gets called when User presses Button
     public void startAsUser(){
         mqttManager = new MQTTManager();
-        dishManager = new DishManager();
         //mqttManager.connectToLocalServer();
         mqttManager.connectToHAWServer();
 
     }
-
-
     //Gets called by secret Button
-    public void startAsQRScanner(){
+
+    public void ResetApp(){
 
     }
 
@@ -32,22 +26,18 @@ public class ProcessManager {
     }
 
     public void waitForQRCode(){
-        final String[] QR_Normal_Plate = {"1", "2", "3"};
-        final String QR_Weighted_Plate = "0";
-
-        startCountdown("qrcode");
+        startCountdown(Database.QRSCANNER_QRCODE);
         mqttManager.setQRCallback(new QRCallback() {
             @Override
-            public void onQRCallback(String code) {
-                if(QR_Weighted_Plate.equals(code)) { startWeighing(); return;}
+            public void onQRCallback(String qrCode) {
+                List<String> qRNormalPlatesList = Arrays.asList(Database.QR_NORMAL_PLATES);
 
-                List<String> liste = Arrays.asList(QR_Normal_Plate);
-                if (liste.contains(code)){
-                    int index = liste.indexOf(code);
-                    Dish currentDish = dishManager.getDishById(index);
+                if(Database.QR_Weighted_Plate.equals(qrCode)) startWeighing();
+                else if (qRNormalPlatesList.contains(qrCode)){
+                    int index = qRNormalPlatesList.indexOf(qrCode);
+                    Dish currentDish = Database.TODAYS_DISHES[index];
                     startPaying(currentDish);
                 }
-
                 else Log.error("No Result for this QRCode!");
             }
         });
@@ -61,35 +51,37 @@ public class ProcessManager {
             @Override
             public void onFinish() {
                 //TODO: Reset zum vorherigen View
-                if(topic == "weight")
-                mqttManager.unsubscribeFromWeight();
-                else if(topic == "qrcode"){
+                if(topic == Database.SCALE_WEIGHT) {
+                    mqttManager.unsubscribeFromWeight();
+                }
+                else if(topic == Database.QRSCANNER_QRCODE){
                     mqttManager.unsubscribeFromQRCode();
                 }
             }
         };
     }
+    void startWeighing(){
+        waitForWeight();
+    }
     public void waitForWeight(){
-        startCountdown("weight");
+        startCountdown(Database.SCALE_WEIGHT);
         mqttManager.setScaleCallback(new ScaleCallBack() {
             @Override
             public void onWeightCallback(float weight) {
-                startPaying(weightedDish(weight));
+                Dish weightedDish = weightedDish(weight);
+                startPaying(weightedDish);
             }
         });
     }
     private Dish weightedDish(float weight){
-        float pricePerKG = 2.75f;
-        float endPrice = weight * pricePerKG;
+        float endPrice = weight * Database.PRICE_PERKG_WEIGHTED_PLATE;
         return new Dish("Salat Bar", endPrice);
     }
 
-    void startWeighing(){
-        waitForWeight();
-    }
+
 
     public void startPaying(Dish dishToPay){
-
+        //TODO: Give front-end data
     }
     public void endProcess(){
 
