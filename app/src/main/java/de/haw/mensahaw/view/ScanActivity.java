@@ -82,7 +82,7 @@ public class ScanActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(ScanActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
-                        qrCodeManager.SendQRCode(result.getText());
+                        qrCodeManager.sendQRCode(result.getText());
                     }
                 });
             }

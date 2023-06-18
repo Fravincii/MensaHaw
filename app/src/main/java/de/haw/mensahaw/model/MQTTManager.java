@@ -4,9 +4,7 @@ import java.nio.charset.StandardCharsets;
 
 public class MQTTManager {
 
-    private static final String SCALE_WEIGHT = "Scale/Weight";
-    private static final String SCALE_PRICE = "Scale/Price";
-    private static final String QRSCANNER_QRCODE = "QRScanner/QRCode";
+
     private MqttClient mqtt;
 
     public boolean connectToLocalServer(){
@@ -43,15 +41,15 @@ public class MQTTManager {
     //region Un-/Subscribe MQTT
 
     public void subcribeToWeight(){
-        subscribeToTopic(SCALE_WEIGHT);}
+        subscribeToTopic(Database.SCALE_WEIGHT);}
     public void subcribeToQRCode(){
-        subscribeToTopic(QRSCANNER_QRCODE);}
+        subscribeToTopic(Database.QRSCANNER_QRCODE);}
     public void subscribeToPrice(){
-        subscribeToTopic(SCALE_PRICE);}
+        subscribeToTopic(Database.SCALE_PRICE);}
 
-    public void unsubscribeFromWeight(){mqtt.unsubscribe(SCALE_WEIGHT);}
-    public void unsubscribeFromQRCode(){mqtt.unsubscribe(QRSCANNER_QRCODE);}
-    public void unsubscribeFromPrice(){mqtt.unsubscribe(SCALE_PRICE);}
+    public void unsubscribeFromWeight(){mqtt.unsubscribe(Database.SCALE_WEIGHT);}
+    public void unsubscribeFromQRCode(){mqtt.unsubscribe(Database.QRSCANNER_QRCODE);}
+    public void unsubscribeFromPrice(){mqtt.unsubscribe(Database.SCALE_PRICE);}
 
     private void subscribeToTopic(String topic){
         backUp();
@@ -69,19 +67,21 @@ public class MQTTManager {
     //endregion
     private void receiveData(String topic, String message) {
         try {
-            if(topic == SCALE_WEIGHT){
+            if(topic == Database.SCALE_WEIGHT){
                 float value = Float.parseFloat(message);
                 scaleCallBack.onWeightCallback(value);
                 Log.info(String.format("MESSAGE: The Scale weight: %skg", message));
             }
-            else if(topic == SCALE_PRICE){
-                Log.info(String.format("MESSAGE: The Price of the Meal is: %s€ (Can be ignored)", message));
-            }
-            else if(topic == QRSCANNER_QRCODE){
+            else if(topic == Database.QRSCANNER_QRCODE){
                 Log.info(String.format("MESSAGE: QR Code is %s", message));
                 qrCallback.onQRCallback(message);
             }
-
+            else if(topic == Database.SCALE_PRICE){
+                Log.info(String.format("MESSAGE: The Price of the Meal is: %s€ (Can be ignored)", message));
+            }
+            else {
+                Log.error(String.format("MESSAGE: The Topic was wrong!", message));
+            }
         } catch (Exception e) {
             Log.error(String.format("Message on %s was not a float value : %s", topic, message));
         }
@@ -95,16 +95,16 @@ public class MQTTManager {
     //region MQTT Publishing
     public void publishPrice(Float price){
         backUp();
-        mqtt.publish(SCALE_PRICE, price.toString());
+        mqtt.publish(Database.SCALE_PRICE, price.toString());
     }
 
     public void publishWeight(Float weight){
         backUp();
-        mqtt.publish(SCALE_WEIGHT, weight.toString());
+        mqtt.publish(Database.SCALE_WEIGHT, weight.toString());
     }
     public void publishQRCode(String QRCode){
         backUp();
-        mqtt.publish(QRSCANNER_QRCODE, QRCode);
+        mqtt.publish(Database.QRSCANNER_QRCODE, QRCode);
     }
     //endregion
 
