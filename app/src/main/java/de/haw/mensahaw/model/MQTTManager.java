@@ -44,12 +44,9 @@ public class MQTTManager {
         subscribeToTopic(Database.SCALE_WEIGHT);}
     public void subcribeToQRCode(){
         subscribeToTopic(Database.QRSCANNER_QRCODE);}
-    public void subscribeToPrice(){
-        subscribeToTopic(Database.SCALE_PRICE);}
 
     public void unsubscribeFromWeight(){mqtt.unsubscribe(Database.SCALE_WEIGHT);}
     public void unsubscribeFromQRCode(){mqtt.unsubscribe(Database.QRSCANNER_QRCODE);}
-    public void unsubscribeFromPrice(){mqtt.unsubscribe(Database.SCALE_PRICE);}
 
     private void subscribeToTopic(String topic){
         backUp();
@@ -98,10 +95,6 @@ public class MQTTManager {
         mqtt.publish(Database.SCALE_PRICE, price.toString());
     }
 
-    public void publishWeight(Float weight){
-        backUp();
-        mqtt.publish(Database.SCALE_WEIGHT, weight.toString());
-    }
     public void publishQRCode(String QRCode){
         backUp();
         mqtt.publish(Database.QRSCANNER_QRCODE, QRCode);

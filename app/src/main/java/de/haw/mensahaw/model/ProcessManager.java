@@ -2,8 +2,12 @@ package de.haw.mensahaw.model;
 
 import android.os.CountDownTimer;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import java.util.Arrays;
 import java.util.List;
+
+import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
 
 public class ProcessManager {
     private MQTTManager mqttManager;
@@ -26,7 +30,9 @@ public class ProcessManager {
     }
 
     public void waitForQRCode(){
+
         startCountdown(Database.QRSCANNER_QRCODE);
+        mqttManager.subcribeToQRCode();
         mqttManager.setQRCallback(new QRCallback() {
             @Override
             public void onQRCallback(String qrCode) {
@@ -64,11 +70,13 @@ public class ProcessManager {
         waitForWeight();
     }
     public void waitForWeight(){
+        mqttManager.subcribeToWeight();
         startCountdown(Database.SCALE_WEIGHT);
         mqttManager.setScaleCallback(new ScaleCallBack() {
             @Override
             public void onWeightCallback(float weight) {
                 Dish weightedDish = weightedDish(weight);
+                mqttManager.publishPrice(weightedDish.getPrice());
                 startPaying(weightedDish);
             }
         });
@@ -82,6 +90,10 @@ public class ProcessManager {
 
     public void startPaying(Dish dishToPay){
         //TODO: Give front-end data
+
+
+        Checkout_ViewModel priceViewModel = new Checkout_ViewModel();
+        priceViewModel.setPrice(33.22f);
     }
     public void endProcess(){
 
