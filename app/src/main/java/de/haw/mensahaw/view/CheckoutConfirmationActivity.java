@@ -17,8 +17,11 @@ public class CheckoutConfirmationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout_confirmation);
 
-        returnButton = findViewById(R.id.backtomenu);
+        setReturnOnClick();
 
+    }
+    private void setReturnOnClick(){
+        returnButton = findViewById(R.id.backtomenu);
         returnButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 openStartMenuView();

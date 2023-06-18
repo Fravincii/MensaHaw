@@ -8,26 +8,31 @@ import android.view.View;
 import android.widget.Button;
 
 import de.haw.mensahaw.R;
-import de.haw.mensahaw.model.Log;
 
 public class ProcessDescriptionActivity extends AppCompatActivity {
     private Button startButton;
-    private Button devButton;
+    private Button qrButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_process_description);
 
+        setStartOnClick();
+        setQROnClick();
+    }
+
+    private void setStartOnClick(){
         startButton =  findViewById(R.id.startingbutton);
         startButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 openWeightingView();
             }
         });
-
-        devButton = findViewById(R.id.developerbutton);
-        devButton.setOnClickListener(new View.OnClickListener(){
+    }
+    private void setQROnClick(){
+        qrButton = findViewById(R.id.qrbutton);
+        qrButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 openQR();
             }

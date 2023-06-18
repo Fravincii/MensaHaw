@@ -10,11 +10,12 @@
     <string name="abbrechen">Abbrechen</string>
     <string name="bezahlen">Bezahlen</string>
     <string name="_22_43">22.43€</string>
-    <string name="_260_kg">260 Kg</string>
+    <string name="_260_kg">Hack mit Hack</string>
     <string name="preis">Preis</string>
-    <string name="gewicht">Gewicht</string>
+    <string name="gewicht">Gericht</string>
     <string name="scanner">scanner</string>
     <string name="gewichtetes_tagesgericht">Gewichtetes Tagesgericht</string>
     <string name="zahlung_erfolgreich">Zahlung Erfolgreich!</string>
     <string name="button">Zurück zum Start</string>
+    <string name="_22_3">22.3€</string>
 </resources>
