@@ -6,9 +6,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
@@ -22,10 +24,13 @@ import de.haw.mensahaw.model.QRCodeManager;
 
 public class ScanActivity extends AppCompatActivity {
     QRCodeManager qrCodeManager;
+    private Button returnButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
+
+        setReturnOnClick();
 
         qrCodeManager = new QRCodeManager();
 
@@ -34,11 +39,24 @@ public class ScanActivity extends AppCompatActivity {
         else startScanning();
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         mCodeScanner.startPreview();
         qrCodeManager.mQTTSetup();
+    }
+    private void setReturnOnClick() {
+        returnButton = findViewById(R.id.backtostart);
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                openStartMenuView();
+            }
+        });
+    }
+    public void openStartMenuView(){
+        Intent changeView = new Intent(this, ProcessDescriptionActivity.class);
+        startActivity(changeView);
     }
 
     @Override
