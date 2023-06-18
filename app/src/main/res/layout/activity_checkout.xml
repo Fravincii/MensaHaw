@@ -7,7 +7,7 @@
     tools:context=".view.CheckoutActivity">
 
     <EditText
-        android:id="@+id/weight"
+        android:id="@+id/dish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="340dp"
@@ -28,10 +28,10 @@
         android:ems="10"
         android:inputType="numberDecimal"
         android:singleLine="false"
-        android:text="@string/_22_43"
+        android:text="@string/_22_3"
         android:textAlignment="center"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/weight"
+        app:layout_constraintBottom_toTopOf="@+id/dish"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,16 +55,16 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/weightheadline"
+        android:id="@+id/dishheadline"
         android:layout_width="411dp"
         android:layout_height="65dp"
         android:background="#FF9800"
         android:text="@string/gewicht"
         android:textAlignment="center"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/weight"
+        app:layout_constraintBottom_toTopOf="@+id/dish"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/price"
         app:layout_constraintVertical_bias="1.0" />
@@ -80,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.881"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weight"
+        app:layout_constraintTop_toBottomOf="@+id/dish"
         app:layout_constraintVertical_bias="0.492" />
 
     <Button

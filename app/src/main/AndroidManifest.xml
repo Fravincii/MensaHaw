@@ -26,7 +26,6 @@
             android:name=".view.MainActivity"
             android:exported="false" />
         <activity
-<<<<<<< Updated upstream
             android:name=".view.WeightingInputActivity"
             android:exported="false" />
         <activity
@@ -37,13 +36,7 @@
             android:exported="false" />
         <activity
             android:name=".view.ProcessDescriptionActivity"
-=======
-            android:name=".view.ScanActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.MainActivity"
->>>>>>> Stashed changes
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

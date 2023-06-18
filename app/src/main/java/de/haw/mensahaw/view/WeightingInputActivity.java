@@ -17,6 +17,9 @@ public class WeightingInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weighting_input);
 
+        setWeightingOnClick();
+    }
+    private void setWeightingOnClick(){
         weightingButton =  findViewById(R.id.weightbutton);
         weightingButton.setOnClickListener(new View.OnClickListener(){
 
