@@ -16,7 +16,9 @@ public class ProcessManager {
     public void startAsUser(){
         mqttManager = new MQTTManager();
         dishManager = new DishManager();
-        mqttManager.connectToServer();
+        //mqttManager.connectToLocalServer();
+        mqttManager.connectToHAWServer();
+
     }
 
 
@@ -33,7 +35,7 @@ public class ProcessManager {
         final String[] QR_Normal_Plate = {"1", "2", "3"};
         final String QR_Weighted_Plate = "0";
 
-        startCountdown();
+        startCountdown("qrcode");
         mqttManager.setQRCallback(new QRCallback() {
             @Override
             public void onQRCallback(String code) {
@@ -50,7 +52,7 @@ public class ProcessManager {
             }
         });
     }
-    private void startCountdown(){
+    private void startCountdown(String topic){
         CountDownTimer timer = new CountDownTimer(30000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -59,12 +61,16 @@ public class ProcessManager {
             @Override
             public void onFinish() {
                 //TODO: Reset zum vorherigen View
-                mqttManager.unsubscribeFromQRCode();
+                if(topic == "weight")
+                mqttManager.unsubscribeFromWeight();
+                else if(topic == "qrcode"){
+                    mqttManager.unsubscribeFromQRCode();
+                }
             }
         };
     }
     public void waitForWeight(){
-
+        startCountdown("weight");
         mqttManager.setScaleCallback(new ScaleCallBack() {
             @Override
             public void onWeightCallback(float weight) {

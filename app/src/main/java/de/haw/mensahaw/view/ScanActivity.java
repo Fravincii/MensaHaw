@@ -21,8 +21,6 @@ import de.haw.mensahaw.R;
 import de.haw.mensahaw.model.QRCodeManager;
 
 public class ScanActivity extends AppCompatActivity {
-
-
     QRCodeManager qrCodeManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +34,39 @@ public class ScanActivity extends AppCompatActivity {
         else startScanning();
 
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mCodeScanner.startPreview();
+        qrCodeManager.mQTTSetup();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mCodeScanner.releaseResources();
+        qrCodeManager.endconnection();
+    }
+
+
+    //region Camera Permission
     private boolean checkMissingCameraPermission(){
         return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED;
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 123){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                startScanning();
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    //endregion
+    //region Scanning
     private CodeScanner mCodeScanner;
     private void startScanning(){
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
@@ -66,29 +94,7 @@ public class ScanActivity extends AppCompatActivity {
             }
         });
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 123){
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                startScanning();
-            } else {
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mCodeScanner.startPreview();
-        qrCodeManager.mQTTSetup();
-    }
+   //endregion
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mCodeScanner.releaseResources();
-        qrCodeManager.endconnection();
-    }
+
 }

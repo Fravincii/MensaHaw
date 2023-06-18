@@ -8,7 +8,8 @@ public class MQTTManager {
     private static final String SCALE_PRICE = "Scale/Price";
     private static final String QRSCANNER_QRCODE = "QRScanner/QRCode";
     private MqttClient mqtt;
-    public boolean connectToServer(){
+
+    public boolean connectToLocalServer(){
         if(mqtt != null) return false;
         mqtt = new MqttClient();
         mqtt.connectToBroker("myClientId",
@@ -23,7 +24,21 @@ public class MQTTManager {
         }
         return true;
     }
-
+    public boolean connectToHAWServer(){
+        if(mqtt != null) return false;
+        mqtt = new MqttClient();
+        mqtt.connectToBroker("my-mqtt-client-id",
+                "broker.hivemq.com",
+                1883,
+                "my-user",
+                "my-password");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
 
     //region Un-/Subscribe MQTT
 
@@ -74,7 +89,7 @@ public class MQTTManager {
     private void backUp(){
         if (mqtt == null) {
             Log.error("MQTT Client is not inizialized!");
-            connectToServer();
+            connectToLocalServer();
         }
     }
     //region MQTT Publishing

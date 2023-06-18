@@ -16,15 +16,15 @@ public class ExampleUnitTest {
     public void connectToServer_withoutClient_isTrue() {
         MQTTManager mqttManager = new MQTTManager();
 
-        assertEquals(true, mqttManager.connectToServer());
+        assertEquals(true, mqttManager.connectToLocalServer());
     }
 
     @Test
     public void connectToServer_withClient_isFalse() {
         MQTTManager mqttManager = new MQTTManager();
-        mqttManager.connectToServer();
+        mqttManager.connectToLocalServer();
 
-        assertEquals(false, mqttManager.connectToServer());
+        assertEquals(false, mqttManager.connectToLocalServer());
     }
     @Test
     public void dishManagerInit_currentDishesSize_isThree() {

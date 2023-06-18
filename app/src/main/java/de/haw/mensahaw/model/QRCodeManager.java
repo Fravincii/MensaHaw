@@ -8,7 +8,7 @@ public class QRCodeManager {
     }
     public void mQTTSetup(){
         mqttManager = new MQTTManager();
-        mqttManager.connectToServer();
+        mqttManager.connectToLocalServer();
     }
 
     public void SendQRCode(String qrCode){
