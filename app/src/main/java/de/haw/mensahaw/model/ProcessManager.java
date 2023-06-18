@@ -30,9 +30,9 @@ public class ProcessManager {
         mqttManager.setQRCallback(new QRCallback() {
             @Override
             public void onQRCallback(String qrCode) {
-                List<String> qRNormalPlatesList = Arrays.asList(Database.QR_NORMAL_PLATES);
+                List<String> qRNormalPlatesList = Arrays.asList(Database.QRCode_NORMAL_PLATES);
 
-                if(Database.QR_Weighted_Plate.equals(qrCode)) startWeighing();
+                if(Database.QRCode_Weighted_Plate.equals(qrCode)) startWeighing();
                 else if (qRNormalPlatesList.contains(qrCode)){
                     int index = qRNormalPlatesList.indexOf(qrCode);
                     Dish currentDish = Database.TODAYS_DISHES[index];

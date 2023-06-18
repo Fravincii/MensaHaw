@@ -1,12 +1,13 @@
 package de.haw.mensahaw.model;
 
 public class Log {
-    public static void info(String string) {
+    public static String info(String string) {
         android.util.Log.d("LOL", string);
+        return string;
     }
-    public static void info(String string, Float value) {
-        android.util.Log.d("LOL", string + ", " + value.toString());
+    public static String error(String string) {
+        android.util.Log.w("LOL", string);
+        return string;
     }
-    public static void error(String string) {android.util.Log.w("LOL", string);}
 
 }
