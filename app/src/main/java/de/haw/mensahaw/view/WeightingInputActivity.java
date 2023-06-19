@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import de.haw.mensahaw.R;
 
 public class WeightingInputActivity extends AppCompatActivity {
-    private Button weightingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
