@@ -3,9 +3,16 @@ package de.haw.mensahaw.model;
 import java.nio.charset.StandardCharsets;
 
 public class MQTTManager {
-
-
     private MqttClient mqtt;
+    private Database database;
+
+    public void setDatabase(Database database) {
+        this.database = database;
+    }
+
+
+
+    //TODO: Globale Application verbindungs instanz (Android FAQ)
 
     public boolean connectToLocalServer(){
         if(mqtt != null) return false;
@@ -40,14 +47,15 @@ public class MQTTManager {
 
     //region Un-/Subscribe MQTT
 
-    public void subcribeToWeight(){
-        subscribeToTopic(Database.SCALE_WEIGHT);}
-    public void subcribeToQRCode(){
-        subscribeToTopic(Database.QRSCANNER_QRCODE);}
 
-    public void unsubscribeFromWeight(){mqtt.unsubscribe(Database.SCALE_WEIGHT);}
-    public void unsubscribeFromQRCode(){mqtt.unsubscribe(Database.QRSCANNER_QRCODE);}
 
+    public void unsubscribeFromWeight(){mqtt.unsubscribe(database.SCALE_WEIGHT);}
+    public void unsubscribeFromQRCode(){mqtt.unsubscribe(database.QRSCANNER_QRCODE);}
+    /*
+    public void subscribeToWeight(){
+        subscribeToTopic(database.SCALE_WEIGHT);}
+    public void subscribeToQRCode(){
+        subscribeToTopic(database.QRSCANNER_QRCODE);}
     private void subscribeToTopic(String topic){
         backUp();
         mqtt.subscribe(topic, (message) -> {
@@ -60,20 +68,37 @@ public class MQTTManager {
             }
         });
     }
+    */
+    public void subscribeToWeight(){
+        mqtt.subscribe(database.SCALE_WEIGHT, message -> {
+            String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
+            float value = Float.parseFloat(convertedMessageContent);
+            scaleCallBack.onWeightCallback(value);
+            Log.info(String.format("MESSAGE: The Scale weight: %skg", message));
+        });
+    }
+    public void subscribeToQRCode(){
+        mqtt.subscribe(database.QRSCANNER_QRCODE, message -> {
+            String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
+            qrCallback.onQRCallback(convertedMessageContent);
+            Log.info(String.format("MESSAGE: QR Code is %s", message));
 
+        });
+    }
     //endregion
+    /*
     private void receiveData(String topic, String message) {
         try {
-            if(topic == Database.SCALE_WEIGHT){
+            if(topic == database.SCALE_WEIGHT){
                 float value = Float.parseFloat(message);
                 scaleCallBack.onWeightCallback(value);
                 Log.info(String.format("MESSAGE: The Scale weight: %skg", message));
             }
-            else if(topic == Database.QRSCANNER_QRCODE){
+            else if(topic == database.QRSCANNER_QRCODE){
                 Log.info(String.format("MESSAGE: QR Code is %s", message));
                 qrCallback.onQRCallback(message);
             }
-            else if(topic == Database.SCALE_PRICE){
+            else if(topic == database.SCALE_PRICE){
                 Log.info(String.format("MESSAGE: The Price of the Meal is: %s€ (Can be ignored)", message));
             }
             else {
@@ -83,6 +108,7 @@ public class MQTTManager {
             Log.error(String.format("Message on %s was not a float value : %s", topic, message));
         }
     }
+*/
     private void backUp(){
         if (mqtt == null) {
             Log.error("MQTT Client is not inizialized!");
@@ -92,12 +118,12 @@ public class MQTTManager {
     //region MQTT Publishing
     public void publishPrice(Float price){
         backUp();
-        mqtt.publish(Database.SCALE_PRICE, price.toString());
+        mqtt.publish(database.SCALE_PRICE, price.toString());
     }
 
     public void publishQRCode(String QRCode){
         backUp();
-        mqtt.publish(Database.QRSCANNER_QRCODE, QRCode);
+        mqtt.publish(database.QRSCANNER_QRCODE, QRCode);
     }
     //endregion
 

@@ -23,9 +23,6 @@
             android:name=".view.CheckoutActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.WeightingInputActivity"
             android:exported="false" />
         <activity
@@ -36,7 +33,10 @@
             android:exported="false" />
         <activity
             android:name=".view.ProcessDescriptionActivity"
-            android:exported="true" >
+            android:exported="false" />
+        <activity
+            android:name=".view.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

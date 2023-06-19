@@ -12,8 +12,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ProcessManager processManager = new ProcessManager();
-        processManager.startAsUser();
+        //ProcessManager processManager = new ProcessManager();
+        //processManager.startAsUser();
 
     }
 

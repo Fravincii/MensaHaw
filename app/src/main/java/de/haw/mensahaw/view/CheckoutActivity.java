@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import de.haw.mensahaw.R;
+import de.haw.mensahaw.model.MensaApplication;
 import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
 
 public class CheckoutActivity extends AppCompatActivity {
@@ -22,7 +23,13 @@ public class CheckoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_checkout);
 
         checkoutViewModel = new ViewModelProvider(this).get(Checkout_ViewModel.class);
-        checkoutViewModel.setPrice(33.22f);
+        //getApplication().getConnect()
+          //      viewmodel.setConnect(connection);
+
+        MensaApplication mensaApplication = (MensaApplication) getApplication();
+        checkoutViewModel.setProcessManager(mensaApplication.getProcessManager());
+
+        checkoutViewModel.setPriceInView();
         checkoutViewModel.setDishNameInView("Hack mit Hack");
 
         setPayOnClick();
@@ -31,9 +38,12 @@ public class CheckoutActivity extends AppCompatActivity {
         activatePriceObserver();
     }
 
+    //TODO: Methode um wieder zurück zur Weighting Activity zu kommen
+    //TODO: Put Image view over everything with progressbar/waiting prompt and deactivate it when it loaded
     private void activatePriceObserver(){
         TextView priceView = findViewById(R.id.price);
         priceView.setText(String.valueOf(checkoutViewModel.getPrice()));
+        //TODO: Change to setPrice
         checkoutViewModel.getPrice().observe(this, new Observer<Float>() {
             @Override
             public void onChanged(Float updatedPrice) {
