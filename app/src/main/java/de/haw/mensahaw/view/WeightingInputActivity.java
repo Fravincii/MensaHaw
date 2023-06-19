@@ -20,6 +20,8 @@ public class WeightingInputActivity extends AppCompatActivity {
         setWeightingOnClick();
     }
     private void setWeightingOnClick(){
+        Button weightingButton;
+
         weightingButton =  findViewById(R.id.weightbutton);
         weightingButton.setOnClickListener(new View.OnClickListener(){
 

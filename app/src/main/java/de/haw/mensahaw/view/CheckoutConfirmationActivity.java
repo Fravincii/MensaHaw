@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import de.haw.mensahaw.R;
 
 public class CheckoutConfirmationActivity extends AppCompatActivity {
-    private Button returnButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +20,7 @@ public class CheckoutConfirmationActivity extends AppCompatActivity {
 
     }
     private void setReturnOnClick(){
+        Button returnButton;
         returnButton = findViewById(R.id.backtomenu);
         returnButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){

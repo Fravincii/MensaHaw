@@ -10,8 +10,6 @@ import android.widget.Button;
 import de.haw.mensahaw.R;
 
 public class ProcessDescriptionActivity extends AppCompatActivity {
-    private Button startButton;
-    private Button qrButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +21,7 @@ public class ProcessDescriptionActivity extends AppCompatActivity {
     }
 
     private void setStartOnClick(){
+        Button startButton;
         startButton =  findViewById(R.id.startingbutton);
         startButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
@@ -31,6 +30,7 @@ public class ProcessDescriptionActivity extends AppCompatActivity {
         });
     }
     private void setQROnClick(){
+        Button qrButton;
         qrButton = findViewById(R.id.qrbutton);
         qrButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){

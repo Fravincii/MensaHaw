@@ -14,8 +14,6 @@ import de.haw.mensahaw.R;
 import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
 
 public class CheckoutActivity extends AppCompatActivity {
-    private Button payButton;
-    private Button cancelButton;
     public Checkout_ViewModel checkoutViewModel;
 
     @Override
@@ -24,7 +22,7 @@ public class CheckoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_checkout);
 
         checkoutViewModel = new ViewModelProvider(this).get(Checkout_ViewModel.class);
-        checkoutViewModel.setPriceInView(33.22f);
+        checkoutViewModel.setPrice(33.22f);
         checkoutViewModel.setDishNameInView("Hack mit Hack");
 
         setPayOnClick();
@@ -56,6 +54,7 @@ public class CheckoutActivity extends AppCompatActivity {
         });
     }
     private void setCancelOnClick(){
+        Button cancelButton;
         cancelButton = findViewById(R.id.cancelbutton);
         cancelButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
@@ -64,6 +63,7 @@ public class CheckoutActivity extends AppCompatActivity {
         });
     }
     private void setPayOnClick(){
+        Button payButton;
         payButton =  findViewById(R.id.paybutton);
         payButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
