@@ -2,12 +2,10 @@ package de.haw.mensahaw.model;
 
 import android.os.CountDownTimer;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import java.util.Arrays;
 import java.util.List;
 
-import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
+import de.haw.mensahaw.viewmodel.CheckoutViewModel;
 
 public class ProcessManager {
     private MQTTManager mqttManager;
@@ -92,7 +90,7 @@ public class ProcessManager {
         //TODO: Give front-end data
 
 
-        Checkout_ViewModel priceViewModel = new Checkout_ViewModel();
+        CheckoutViewModel priceViewModel = new CheckoutViewModel();
         priceViewModel.setPrice(33.22f);
     }
     public void endProcess(){

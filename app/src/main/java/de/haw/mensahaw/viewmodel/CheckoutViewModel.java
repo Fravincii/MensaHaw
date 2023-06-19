@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import de.haw.mensahaw.model.ProcessManager;
 
-public class Checkout_ViewModel extends ViewModel  {
+public class CheckoutViewModel extends ViewModel  {
     public void setProcessManager(ProcessManager processManager) {
         this.processManager = processManager;
     }

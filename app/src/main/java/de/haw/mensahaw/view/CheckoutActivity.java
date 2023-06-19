@@ -11,17 +11,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import de.haw.mensahaw.R;
-import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
+import de.haw.mensahaw.viewmodel.CheckoutViewModel;
 
 public class CheckoutActivity extends AppCompatActivity {
-    public Checkout_ViewModel checkoutViewModel;
+    public CheckoutViewModel checkoutViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
-        checkoutViewModel = new ViewModelProvider(this).get(Checkout_ViewModel.class);
+        checkoutViewModel = new ViewModelProvider(this).get(CheckoutViewModel.class);
         checkoutViewModel.setPrice(33.22f);
         checkoutViewModel.setDishNameInView("Hack mit Hack");
 
