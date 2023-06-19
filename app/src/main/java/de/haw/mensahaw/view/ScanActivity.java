@@ -23,17 +23,14 @@ import de.haw.mensahaw.R;
 import de.haw.mensahaw.model.MQTTManager;
 
 public class ScanActivity extends AppCompatActivity {
-    //QRCodeManager qrCodeManager;
     private MQTTManager mqttManager;
-    private Button returnButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
 
-        setReturnOnClick();
-
         mqttInit();
+        setReturnOnClick();
 
         if (checkMissingCameraPermission())ActivityCompat.requestPermissions(
                 this, new String[] {Manifest.permission.CAMERA},123);
@@ -50,8 +47,13 @@ public class ScanActivity extends AppCompatActivity {
         super.onResume();
         mCodeScanner.startPreview();
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mCodeScanner.releaseResources();
+    }
     private void setReturnOnClick() {
-        returnButton = findViewById(R.id.backtostart);
+        Button returnButton = findViewById(R.id.backtostart);
         returnButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 openStartMenuView();
@@ -62,13 +64,6 @@ public class ScanActivity extends AppCompatActivity {
         Intent changeView = new Intent(this, ProcessDescriptionActivity.class);
         startActivity(changeView);
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mCodeScanner.releaseResources();
-    }
-
 
     //region Camera Permission
     private boolean checkMissingCameraPermission(){

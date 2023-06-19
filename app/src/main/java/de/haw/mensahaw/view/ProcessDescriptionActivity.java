@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import de.haw.mensahaw.R;
+import de.haw.mensahaw.model.MensaApplication;
+import de.haw.mensahaw.model.ProcessManager;
 
 public class ProcessDescriptionActivity extends AppCompatActivity {
 
@@ -20,6 +22,7 @@ public class ProcessDescriptionActivity extends AppCompatActivity {
         setStartOnClick();
         setQROnClick();
     }
+
 
     private void setStartOnClick(){
         Button startButton;

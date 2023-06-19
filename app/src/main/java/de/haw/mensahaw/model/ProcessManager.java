@@ -5,12 +5,19 @@ import android.os.CountDownTimer;
 import java.util.Arrays;
 import java.util.List;
 
-import de.haw.mensahaw.viewmodel.CheckoutViewModel;
+
+import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
+
 
 public class ProcessManager {
     private MQTTManager mqttManager;
     private MensaApplication mensaApplication;
     private Database database;
+
+    public ProcessManager() {
+        initMQTT();
+    }
+
     public void setDatabase(Database database) {
         this.database = database;
     }
@@ -18,19 +25,13 @@ public class ProcessManager {
         this.mensaApplication = mensaApplication;
     }
 
-
     //Gets called when User presses Button
-    public void startAsUser(){
+    public void initMQTT(){
         mqttManager = new MQTTManager();
         mqttManager.setDatabase(database);
         //mqttManager.connectToLocalServer();
         mqttManager.connectToHAWServer();
     }
-
-    public void startScanningPlate(){
-        waitForQRCode();
-    }
-
     public void waitForQRCode(){
 
         startCountdown(database.QRSCANNER_QRCODE);
@@ -38,11 +39,11 @@ public class ProcessManager {
         mqttManager.setQRCallback(new QRCallback() {
             @Override
             public void onQRCallback(String qrCode) {
-                List<String> qRNormalPlatesList = Arrays.asList(database.QRCode_NORMAL_PLATES);
+                List<String> qrNormalPlatesList = Arrays.asList(database.QRCode_NORMAL_PLATES);
 
-                if(database.QRCode_Weighted_Plate.equals(qrCode)) startWeighing();
-                else if (qRNormalPlatesList.contains(qrCode)){
-                    int index = qRNormalPlatesList.indexOf(qrCode);
+                if(database.QRCode_Weighted_Plate.equals(qrCode)) waitForWeight();
+                else if (qrNormalPlatesList.contains(qrCode)){
+                    int index = qrNormalPlatesList.indexOf(qrCode);
                     Dish currentDish = database.TODAYS_DISHES[index];
                     startPaying(currentDish);
                 }
@@ -68,9 +69,6 @@ public class ProcessManager {
             }
         };
     }
-    void startWeighing(){
-        waitForWeight();
-    }
     public void waitForWeight(){
         mqttManager.subscribeToWeight();
         startCountdown(database.SCALE_WEIGHT);
@@ -88,6 +86,12 @@ public class ProcessManager {
         return new Dish("Salat Bar", endPrice);
     }
 
+    private Checkout_ViewModel checkoutViewModel;
+    public void setCheckoutViewModel(Checkout_ViewModel checkoutViewModel) {
+        this.checkoutViewModel = checkoutViewModel;
+        //startPaying(dishToPay);
+    }
+
     public Dish getDishToPay() {
         return dishToPay;
     }
@@ -95,14 +99,14 @@ public class ProcessManager {
     private Dish dishToPay;
 
     public void startPaying(Dish dishToPay){
-        //TODO: Give front-end data
 
 
-        CheckoutViewModel priceViewModel = new CheckoutViewModel();
-        priceViewModel.setPrice(33.22f);
+        this.dishToPay = dishToPay;
+        if (checkoutViewModel == null || dishToPay == null) return;
+        checkoutViewModel.setPriceInView(dishToPay.getPrice());
+        checkoutViewModel.setDishNameInView(dishToPay.getName());
     }
     public void endProcess(){
-
         mqttManager.disconnectFromServer();
     }
 }

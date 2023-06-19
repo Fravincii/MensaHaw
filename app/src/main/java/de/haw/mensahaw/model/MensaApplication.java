@@ -8,9 +8,7 @@ public class MensaApplication extends Application {
 
     public MensaApplication() {
         database = new Database();
-        processManager = new ProcessManager();
-        processManager.setMensaApplication(this);
-        processManager.setDatabase(database);
+
     }
 
     public Database getDatabase() {
@@ -24,6 +22,8 @@ public class MensaApplication extends Application {
 
     public void setProcessManager(ProcessManager processManager) {
         this.processManager = processManager;
+        processManager.setMensaApplication(this);
+        processManager.setDatabase(database);
     }
 
 

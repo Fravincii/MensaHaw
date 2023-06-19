@@ -15,7 +15,7 @@ import de.haw.mensahaw.model.MensaApplication;
 import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
 
 public class CheckoutActivity extends AppCompatActivity {
-    public CheckoutViewModel checkoutViewModel;
+    public Checkout_ViewModel checkoutViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +23,15 @@ public class CheckoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_checkout);
 
         checkoutViewModel = new ViewModelProvider(this).get(Checkout_ViewModel.class);
-        //getApplication().getConnect()
-          //      viewmodel.setConnect(connection);
 
         MensaApplication mensaApplication = (MensaApplication) getApplication();
         checkoutViewModel.setProcessManager(mensaApplication.getProcessManager());
 
-        checkoutViewModel.setPriceInView();
-        checkoutViewModel.setDishNameInView("Hack mit Hack");
+        //getApplication().getConnect()
+        //      viewmodel.setConnect(connection);
+
+        //checkoutViewModel.setPriceInView();
+        //checkoutViewModel.setDishNameInView("Hack mit Hack");
 
         setPayOnClick();
         setCancelOnClick();
