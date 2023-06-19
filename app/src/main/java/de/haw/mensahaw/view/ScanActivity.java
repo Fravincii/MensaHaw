@@ -20,10 +20,11 @@ import com.budiyev.android.codescanner.ScanMode;
 import com.google.zxing.Result;
 
 import de.haw.mensahaw.R;
-import de.haw.mensahaw.model.QRCodeManager;
+import de.haw.mensahaw.model.MQTTManager;
 
 public class ScanActivity extends AppCompatActivity {
-    QRCodeManager qrCodeManager;
+    //QRCodeManager qrCodeManager;
+    private MQTTManager mqttManager;
     private Button returnButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class ScanActivity extends AppCompatActivity {
 
         setReturnOnClick();
 
-        qrCodeManager = new QRCodeManager();
+        mqttInit();
 
         if (checkMissingCameraPermission())ActivityCompat.requestPermissions(
                 this, new String[] {Manifest.permission.CAMERA},123);
@@ -40,11 +41,14 @@ public class ScanActivity extends AppCompatActivity {
 
     }
 
+    private void mqttInit(){
+        mqttManager = new MQTTManager();
+        mqttManager.connectToLocalServer();
+    }
     @Override
     protected void onResume() {
         super.onResume();
         mCodeScanner.startPreview();
-        qrCodeManager.mQTTSetup();
     }
     private void setReturnOnClick() {
         returnButton = findViewById(R.id.backtostart);
@@ -63,7 +67,6 @@ public class ScanActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mCodeScanner.releaseResources();
-        qrCodeManager.endconnection();
     }
 
 
@@ -100,7 +103,7 @@ public class ScanActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(ScanActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
-                        qrCodeManager.sendQRCode(result.getText());
+                        mqttManager.publishQRCode(result.getText());
                     }
                 });
             }

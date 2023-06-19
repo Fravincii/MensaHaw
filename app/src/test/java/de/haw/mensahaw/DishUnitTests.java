@@ -11,7 +11,6 @@ public class DishUnitTests {
     @Test
     public void Init_givenName_equalsName() {
         String nameOfDish = "Nudeln";
-        float priceOfDish = 0.5f;
 
         Dish dish = new Dish(nameOfDish, 0.5f);
 

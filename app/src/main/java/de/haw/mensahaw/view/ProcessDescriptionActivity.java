@@ -11,6 +11,7 @@ import de.haw.mensahaw.R;
 
 public class ProcessDescriptionActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,7 @@ public class ProcessDescriptionActivity extends AppCompatActivity {
         Intent changeView = new Intent(this, WeightingInputActivity.class);
         startActivity(changeView);
     }
+    //TODO: Bennen die scheise gut
     public void openQR(){
         Intent changeView = new Intent(this, ScanActivity.class);
         startActivity(changeView);

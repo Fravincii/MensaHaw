@@ -9,18 +9,22 @@ import de.haw.mensahaw.viewmodel.CheckoutViewModel;
 
 public class ProcessManager {
     private MQTTManager mqttManager;
+    private MensaApplication mensaApplication;
+    private Database database;
+    public void setDatabase(Database database) {
+        this.database = database;
+    }
+    public void setMensaApplication(MensaApplication mensaApplication) {
+        this.mensaApplication = mensaApplication;
+    }
+
 
     //Gets called when User presses Button
     public void startAsUser(){
         mqttManager = new MQTTManager();
+        mqttManager.setDatabase(database);
         //mqttManager.connectToLocalServer();
         mqttManager.connectToHAWServer();
-
-    }
-    //Gets called by secret Button
-
-    public void ResetApp(){
-
     }
 
     public void startScanningPlate(){
@@ -29,17 +33,17 @@ public class ProcessManager {
 
     public void waitForQRCode(){
 
-        startCountdown(Database.QRSCANNER_QRCODE);
-        mqttManager.subcribeToQRCode();
+        startCountdown(database.QRSCANNER_QRCODE);
+        mqttManager.subscribeToQRCode();
         mqttManager.setQRCallback(new QRCallback() {
             @Override
             public void onQRCallback(String qrCode) {
-                List<String> qRNormalPlatesList = Arrays.asList(Database.QRCode_NORMAL_PLATES);
+                List<String> qRNormalPlatesList = Arrays.asList(database.QRCode_NORMAL_PLATES);
 
-                if(Database.QRCode_Weighted_Plate.equals(qrCode)) startWeighing();
+                if(database.QRCode_Weighted_Plate.equals(qrCode)) startWeighing();
                 else if (qRNormalPlatesList.contains(qrCode)){
                     int index = qRNormalPlatesList.indexOf(qrCode);
-                    Dish currentDish = Database.TODAYS_DISHES[index];
+                    Dish currentDish = database.TODAYS_DISHES[index];
                     startPaying(currentDish);
                 }
                 else Log.error("No Result for this QRCode!");
@@ -55,10 +59,10 @@ public class ProcessManager {
             @Override
             public void onFinish() {
                 //TODO: Reset zum vorherigen View
-                if(topic == Database.SCALE_WEIGHT) {
+                if(topic == database.SCALE_WEIGHT) {
                     mqttManager.unsubscribeFromWeight();
                 }
-                else if(topic == Database.QRSCANNER_QRCODE){
+                else if(topic == database.QRSCANNER_QRCODE){
                     mqttManager.unsubscribeFromQRCode();
                 }
             }
@@ -68,8 +72,8 @@ public class ProcessManager {
         waitForWeight();
     }
     public void waitForWeight(){
-        mqttManager.subcribeToWeight();
-        startCountdown(Database.SCALE_WEIGHT);
+        mqttManager.subscribeToWeight();
+        startCountdown(database.SCALE_WEIGHT);
         mqttManager.setScaleCallback(new ScaleCallBack() {
             @Override
             public void onWeightCallback(float weight) {
@@ -80,11 +84,15 @@ public class ProcessManager {
         });
     }
     private Dish weightedDish(float weight){
-        float endPrice = weight * Database.PRICE_PERKG_WEIGHTED_PLATE;
+        float endPrice = weight * database.PRICE_PERKG_WEIGHTED_PLATE;
         return new Dish("Salat Bar", endPrice);
     }
 
+    public Dish getDishToPay() {
+        return dishToPay;
+    }
 
+    private Dish dishToPay;
 
     public void startPaying(Dish dishToPay){
         //TODO: Give front-end data
