@@ -16,6 +16,6 @@ public class QRCodeManagerUnitTest {
     public void connectToServer_withoutClient_isTrue() {
         MQTTManager mqttManager = new MQTTManager();
 
-        assertEquals(true, mqttManager.connectToLocalServer());
+        assertEquals(true, mqttManager.connectToServer());
     }
 }

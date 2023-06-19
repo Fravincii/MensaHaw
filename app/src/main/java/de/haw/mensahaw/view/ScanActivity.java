@@ -40,7 +40,7 @@ public class ScanActivity extends AppCompatActivity {
 
     private void mqttInit(){
         mqttManager = new MQTTManager();
-        mqttManager.connectToLocalServer();
+        mqttManager.connectToServer();
     }
     @Override
     protected void onResume() {

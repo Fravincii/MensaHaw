@@ -10,33 +10,27 @@ public class MQTTManager {
         this.database = database;
     }
 
-
-
     //TODO: Globale Application verbindungs instanz (Android FAQ)
 
-    public boolean connectToLocalServer(){
+    public boolean connectToServer(){
         if(mqtt != null) return false;
+
+        final boolean connectToOnlineServer = false;
         mqtt = new MqttClient();
-        mqtt.connectToBroker("myClientId",
+        if(connectToOnlineServer)
+            mqtt.connectToBroker("myClientId",
                 "10.0.2.2",
                 1883,
                 "my-user",
                 "my-password");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        return true;
-    }
-    public boolean connectToHAWServer(){
-        if(mqtt != null) return false;
-        mqtt = new MqttClient();
-        mqtt.connectToBroker("my-mqtt-client-id",
+
+        else
+            mqtt.connectToBroker("my-mqtt-client-id",
                 "broker.hivemq.com",
                 1883,
                 "my-user",
                 "my-password");
+
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -46,8 +40,6 @@ public class MQTTManager {
     }
 
     //region Un-/Subscribe MQTT
-
-
 
     public void unsubscribeFromWeight(){mqtt.unsubscribe(database.SCALE_WEIGHT);}
     public void unsubscribeFromQRCode(){mqtt.unsubscribe(database.QRSCANNER_QRCODE);}
@@ -109,20 +101,20 @@ public class MQTTManager {
         }
     }
 */
-    private void backUp(){
+    private void ensureMQTTInitialized(){
         if (mqtt == null) {
             Log.error("MQTT Client is not inizialized!");
-            connectToLocalServer();
+            connectToServer();
         }
     }
     //region MQTT Publishing
     public void publishPrice(Float price){
-        backUp();
+        ensureMQTTInitialized();
         mqtt.publish(database.SCALE_PRICE, price.toString());
     }
 
     public void publishQRCode(String QRCode){
-        backUp();
+        ensureMQTTInitialized();
         mqtt.publish(database.QRSCANNER_QRCODE, QRCode);
     }
     //endregion
