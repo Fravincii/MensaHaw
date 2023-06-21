@@ -18,18 +18,18 @@ public class MQTTManager {
         final boolean connectToOnlineServer = false;
         mqtt = new MqttClient();
         if(connectToOnlineServer)
-            mqtt.connectToBroker("myClientId",
-                "10.0.2.2",
-                1883,
-                "my-user",
-                "my-password");
 
-        else
-            mqtt.connectToBroker("my-mqtt-client-id",
+        mqtt.connectToBroker("my-mqtt-client-id",
                 "broker.hivemq.com",
                 1883,
                 "my-user",
                 "my-password");
+        else
+            mqtt.connectToBroker("myClientId",
+                    "10.0.2.2",
+                    1883,
+                    "my-user",
+                    "my-password");
 
         try {
             Thread.sleep(100);
@@ -66,14 +66,14 @@ public class MQTTManager {
             String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
             float value = Float.parseFloat(convertedMessageContent);
             scaleCallBack.onWeightCallback(value);
-            Log.info(String.format("MESSAGE: The Scale weight: %skg", message));
+            Log.info(String.format("MESSAGE: The Scale weight: %skg", convertedMessageContent));
         });
     }
     public void subscribeToQRCode(){
         mqtt.subscribe(database.QRSCANNER_QRCODE, message -> {
             String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
             qrCallback.onQRCallback(convertedMessageContent);
-            Log.info(String.format("MESSAGE: QR Code is %s", message));
+            Log.info(String.format("MESSAGE: QR Code is %s", convertedMessageContent));
 
         });
     }
@@ -112,7 +112,10 @@ public class MQTTManager {
         ensureMQTTInitialized();
         mqtt.publish(database.SCALE_PRICE, price.toString());
     }
-
+    public void publishWeight(Float weigth){
+        ensureMQTTInitialized();
+        mqtt.publish(database.SCALE_WEIGHT, weigth.toString());
+    }
     public void publishQRCode(String QRCode){
         ensureMQTTInitialized();
         mqtt.publish(database.QRSCANNER_QRCODE, QRCode);

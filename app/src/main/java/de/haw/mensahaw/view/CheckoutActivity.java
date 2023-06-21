@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import de.haw.mensahaw.R;
+import de.haw.mensahaw.viewmodel.*;
 import de.haw.mensahaw.model.MensaApplication;
-import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
 
 public class CheckoutActivity extends AppCompatActivity {
     public Checkout_ViewModel checkoutViewModel;
@@ -29,7 +29,7 @@ public class CheckoutActivity extends AppCompatActivity {
         checkoutViewModel.setCheckoutActivity(this);
 
         //getApplication().getConnect()
-        //      viewmodel.setConnect(connection);
+        // viewmodel.setConnect(connection);
 
         //checkoutViewModel.setPriceInView();
         //checkoutViewModel.setDishNameInView("Hack mit Hack");

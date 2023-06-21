@@ -8,8 +8,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import de.haw.mensahaw.R;
-import de.haw.mensahaw.model.MensaApplication;
-import de.haw.mensahaw.model.ProcessManager;
+import de.haw.mensahaw.model.*;
+import de.haw.mensahaw.viewmodel.*;
 
 public class WeightingInputActivity extends AppCompatActivity {
 
@@ -24,6 +24,7 @@ public class WeightingInputActivity extends AppCompatActivity {
         setWeightingOnClick();
     }
     private void processInit(){
+
         MensaApplication mensaApplication = (MensaApplication) getApplication();
         processManager = new ProcessManager();
         mensaApplication.setProcessManager(processManager);
@@ -32,7 +33,7 @@ public class WeightingInputActivity extends AppCompatActivity {
     private void setWeightingOnClick(){
         Button weightingButton;
 
-        weightingButton =  findViewById(R.id.weightbutton);
+        weightingButton = findViewById(R.id.weightbutton);
         weightingButton.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view){

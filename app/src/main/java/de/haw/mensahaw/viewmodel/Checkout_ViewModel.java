@@ -27,12 +27,15 @@ public class Checkout_ViewModel extends ViewModel  {
     public void backToWeightingView(){
         checkoutActivity.openStartMenuView();
     }
+
     public void setPriceInView(float price) {
-        this.dishPrice.setValue(price);
+        //this.dishPrice.setValue(price);
+        this.dishPrice.postValue(price);
 
     }
     public void setDishNameInView(String name) {
-        this.dishName.setValue(name);
+        //this.dishName.setValue(name);
+        this.dishName.postValue(name);
     }
 
     public MutableLiveData<Float> getPrice() {

@@ -1,6 +1,8 @@
 package de.haw.mensahaw.model;
 
 import android.os.CountDownTimer;
+import android.os.Handler;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,12 +26,11 @@ public class ProcessManager {
     public void initMQTT(){
         mqttManager = new MQTTManager();
         mqttManager.setDatabase(database);
-        //mqttManager.connectToLocalServer();
         mqttManager.connectToServer();
     }
     public void waitForQRCode(){
 
-        startCountdown(database.QRSCANNER_QRCODE);
+        startCountdown();
         mqttManager.subscribeToQRCode();
 
         mqttManager.setQRCallback(qrCode -> {
@@ -39,41 +40,49 @@ public class ProcessManager {
             else if (qrNormalPlatesList.contains(qrCode)){
                 int index = qrNormalPlatesList.indexOf(qrCode);
                 Dish currentDish = database.TODAYS_DISHES[index];
+                receivedWeight = true;
                 startPaying(currentDish);
             }
             else Log.error("No Result for this QRCode!");
+            mqttManager.unsubscribeFromQRCode();
         });
     }
-    private void startCountdown(String topic){
-        CountDownTimer timer = new CountDownTimer(30000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
 
-            }
-            @Override
-            public void onFinish() {
-                if(topic == database.SCALE_WEIGHT) {
-                    mqttManager.unsubscribeFromWeight();
-                }
-                else if(topic == database.QRSCANNER_QRCODE){
-                    mqttManager.unsubscribeFromQRCode();
-                }
-                if(checkoutViewModel != null) checkoutViewModel.backToWeightingView();
-            }
-        };
-        timer.start();
-    }
     public void waitForWeight(){
         mqttManager.subscribeToWeight();
-        startCountdown(database.SCALE_WEIGHT);
+        //CountDownTimer timer = startCountdown(database.SCALE_WEIGHT);
 
         mqttManager.setScaleCallback(weight -> {
+            receivedWeight = true;
             Dish weightedDish = weightedDish(weight);
             mqttManager.publishPrice(weightedDish.getPrice());
+            mqttManager.unsubscribeFromWeight();
             startPaying(weightedDish);
         });
     }
+    private boolean receivedWeight;
+    private CountDownTimer startCountdown(){
+        CountDownTimer timer = new CountDownTimer(21000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.info("time: " + millisUntilFinished);
+                //TODO: Delete Publishing for Testing
+                if(millisUntilFinished < 20000) mqttManager.publishQRCode("1");
+                if(millisUntilFinished < 10000) mqttManager.publishWeight(3.57f);
+            }
+            @Override
+            public void onFinish() {
+                if(!receivedWeight){
+                    mqttManager.unsubscribeFromQRCode();
+                    mqttManager.unsubscribeFromWeight();
 
+                    if(checkoutViewModel != null) checkoutViewModel.backToWeightingView();
+                }
+
+            }
+        }.start();
+        return timer;
+    }
     private Dish weightedDish(float weight){
         float endPrice = weight * database.PRICE_PERKG_WEIGHTED_PLATE;
         return new Dish("Salat Bar", endPrice);
@@ -86,6 +95,7 @@ public class ProcessManager {
 
     public void startPaying(Dish dishToPay){
         if (checkoutViewModel == null) {startPaying(dishToPay); return;}
+        Log.info("Dish is: " + dishToPay.getName());
         checkoutViewModel.setPriceInView(dishToPay.getPrice());
         checkoutViewModel.setDishNameInView(dishToPay.getName());
     }
