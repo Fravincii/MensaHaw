@@ -21,6 +21,7 @@ import com.google.zxing.Result;
 
 import de.haw.mensahaw.R;
 import de.haw.mensahaw.model.MQTTManager;
+import de.haw.mensahaw.model.MensaApplication;
 
 public class ScanActivity extends AppCompatActivity {
     private MQTTManager mqttManager;
@@ -40,7 +41,10 @@ public class ScanActivity extends AppCompatActivity {
 
     private void mqttInit(){
         mqttManager = new MQTTManager();
+        MensaApplication mensaApplication = (MensaApplication)getApplication();
+        mqttManager.setDatabase(mensaApplication.getDatabase());
         mqttManager.connectToServer();
+
     }
     @Override
     protected void onResume() {

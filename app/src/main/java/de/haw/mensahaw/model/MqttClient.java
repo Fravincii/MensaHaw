@@ -39,14 +39,8 @@ public class MqttClient {
     }
 
     public void publish(String topic, String message) {
+        Log.info("Is " + topic + " publishing: " +message);
         client.publishWith().topic(topic).payload(message.getBytes()).send().whenComplete((publish, throwable) -> {
-            if (throwable != null) {
-                throwable.printStackTrace();
-            }
-        });
-    }
-    public void publish(String topic, Float message) {
-        client.publishWith().topic(topic).payload(message.toString().getBytes()).send().whenComplete((publish, throwable) -> {
             if (throwable != null) {
                 throwable.printStackTrace();
             }

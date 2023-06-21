@@ -11,7 +11,7 @@ public class Database {
     public final float PRICE_PERKG_WEIGHTED_PLATE = 2.75f;
     public final Dish firstDish = new Dish("Nudeln mit Hack", 2.75f);
     public final Dish secondDish = new Dish("Erbsen mit Hack", 1.5f);
-    public final Dish thirdDish = new Dish("Hack mit Hack", 5f);
+    public final Dish thirdDish = new Dish("Francesco mit Hack", 8f);
 
     public final Dish[] TODAYS_DISHES = {firstDish,secondDish,thirdDish};
 

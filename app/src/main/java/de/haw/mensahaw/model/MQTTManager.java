@@ -19,10 +19,10 @@ public class MQTTManager {
         mqtt = new MqttClient();
         if(connectToOnlineServer)
 
-        mqtt.connectToBroker("my-mqtt-client-id",
+        mqtt.connectToBroker("my-mqtt-client-id1",
                 "broker.hivemq.com",
                 1883,
-                "my-user",
+                "my-user1",
                 "my-password");
         else
             mqtt.connectToBroker("myClientId",
