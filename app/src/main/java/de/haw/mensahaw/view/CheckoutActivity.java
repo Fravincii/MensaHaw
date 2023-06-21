@@ -26,6 +26,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         MensaApplication mensaApplication = (MensaApplication) getApplication();
         checkoutViewModel.setProcessManager(mensaApplication.getProcessManager());
+        checkoutViewModel.setCheckoutActivity(this);
 
         //getApplication().getConnect()
         //      viewmodel.setConnect(connection);
@@ -39,12 +40,10 @@ public class CheckoutActivity extends AppCompatActivity {
         activatePriceObserver();
     }
 
-    //TODO: Methode um wieder zurück zur Weighting Activity zu kommen
     //TODO: Put Image view over everything with progressbar/waiting prompt and deactivate it when it loaded
     private void activatePriceObserver(){
         TextView priceView = findViewById(R.id.price);
         priceView.setText(String.valueOf(checkoutViewModel.getPrice()));
-        //TODO: Change to setPrice
         checkoutViewModel.getPrice().observe(this, new Observer<Float>() {
             @Override
             public void onChanged(Float updatedPrice) {

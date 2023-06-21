@@ -24,6 +24,7 @@ public class MensaApplication extends Application {
         this.processManager = processManager;
         processManager.setMensaApplication(this);
         processManager.setDatabase(database);
+        processManager.initMQTT();
     }
 
 

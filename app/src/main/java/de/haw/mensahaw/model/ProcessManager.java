@@ -1,11 +1,6 @@
 package de.haw.mensahaw.model;
 
 import android.os.CountDownTimer;
-
-import androidx.annotation.NonNull;
-
-import org.jetbrains.annotations.Contract;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,10 +12,6 @@ public class ProcessManager {
     private MQTTManager mqttManager;
     private MensaApplication mensaApplication;
     private Database database;
-
-    public ProcessManager() {
-        initMQTT();
-    }
 
     public void setDatabase(Database database) {
         this.database = database;
@@ -61,13 +52,13 @@ public class ProcessManager {
             }
             @Override
             public void onFinish() {
-                //TODO: Reset zum vorherigen View
                 if(topic == database.SCALE_WEIGHT) {
                     mqttManager.unsubscribeFromWeight();
                 }
                 else if(topic == database.QRSCANNER_QRCODE){
                     mqttManager.unsubscribeFromQRCode();
                 }
+                if(checkoutViewModel != null) checkoutViewModel.backToWeightingView();
             }
         };
         timer.start();
