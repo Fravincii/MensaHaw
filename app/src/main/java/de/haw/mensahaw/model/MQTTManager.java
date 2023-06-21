@@ -15,7 +15,7 @@ public class MQTTManager {
     public boolean connectToServer(){
         if(mqtt != null) return false;
 
-        final boolean connectToOnlineServer = false;
+        final boolean connectToOnlineServer = true;
         mqtt = new MqttClient();
         if(connectToOnlineServer)
 
