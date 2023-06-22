@@ -12,7 +12,9 @@ public class Database {
     public final Dish firstDish = new Dish("Nudeln mit Hack", 2.75f);
     public final Dish secondDish = new Dish("Erbsen mit Hack", 1.5f);
     public final Dish thirdDish = new Dish("Francesco mit Hack", 8f);
-
     public final Dish[] TODAYS_DISHES = {firstDish,secondDish,thirdDish};
+    public final String todaysWeightedDishName = "Einfach nur Nudeln";
+
+
 
 }

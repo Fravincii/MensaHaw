@@ -27,6 +27,9 @@ public class Checkout_ViewModel extends ViewModel  {
     public void backToWeightingView(){
         checkoutActivity.openStartMenuView();
     }
+    public void showCheckout(){
+        checkoutActivity.quitLoadingScreen();
+    }
 
     public void setPriceInView(float price) {
         //this.dishPrice.setValue(price);

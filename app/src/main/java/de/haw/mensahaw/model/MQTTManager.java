@@ -19,7 +19,7 @@ public class MQTTManager {
         this.asUser = asUser;
         final boolean connectToOnlineServer = true;
         boolean success;
-        
+
         mqtt = new MqttClient();
         if(connectToOnlineServer)
 
@@ -45,19 +45,19 @@ public class MQTTManager {
 
     //region Un-/Subscribe MQTT
 
-    public void unsubscribeFromWeight(){mqtt.unsubscribe(database.SCALE_WEIGHT);}
-    public void unsubscribeFromQRCode(){mqtt.unsubscribe(database.QRSCANNER_QRCODE);}
+    public boolean unsubscribeFromWeight(){return mqtt.unsubscribe(database.SCALE_WEIGHT);}
+    public boolean unsubscribeFromQRCode(){return mqtt.unsubscribe(database.QRSCANNER_QRCODE);}
 
-    public void subscribeToWeight(){
-        mqtt.subscribe(database.SCALE_WEIGHT, message -> {
+    public boolean subscribeToWeight(){
+        return mqtt.subscribe(database.SCALE_WEIGHT, message -> {
             String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
             float value = Float.parseFloat(convertedMessageContent);
             scaleCallBack.onWeightCallback(value);
             Log.info(String.format("MESSAGE: The Scale weight: %skg", convertedMessageContent));
         });
     }
-    public void subscribeToQRCode(){
-        mqtt.subscribe(database.QRSCANNER_QRCODE, message -> {
+    public boolean subscribeToQRCode(){
+       return mqtt.subscribe(database.QRSCANNER_QRCODE, message -> {
             String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
             qrCallback.onQRCallback(convertedMessageContent);
             Log.info(String.format("MESSAGE: QR Code is %s", convertedMessageContent));
@@ -73,22 +73,22 @@ public class MQTTManager {
         }
     }
     //region MQTT Publishing
-    public void publishPrice(Float price){
+    public boolean publishPrice(Float price){
         ensureMQTTInitialized();
-        mqtt.publish(database.SCALE_PRICE, price.toString());
+        return mqtt.publish(database.SCALE_PRICE, price.toString());
     }
-    public void publishWeight(Float weigth){
+    public boolean publishWeight(Float weigth){
         ensureMQTTInitialized();
-        mqtt.publish(database.SCALE_WEIGHT, weigth.toString());
+        return mqtt.publish(database.SCALE_WEIGHT, weigth.toString());
     }
-    public void publishQRCode(String QRCode){
+    public boolean publishQRCode(String QRCode){
         ensureMQTTInitialized();
-        mqtt.publish(database.QRSCANNER_QRCODE, QRCode);
+        return mqtt.publish(database.QRSCANNER_QRCODE, QRCode);
     }
     //endregion
 
-    public void disconnectFromServer(){
-        mqtt.disconnect();
+    public boolean disconnectFromServer(){
+        return mqtt.disconnect();
     }
 
     //region Internal Callbacks
