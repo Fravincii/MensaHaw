@@ -71,7 +71,7 @@ public class ProcessManager {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.info("timeLeft:" + millisUntilFinished);
-                if(millisUntilFinished < 20000) mqttManager.publishQRCode("1");
+                if(millisUntilFinished < 40000) mqttManager.publishQRCode("1");
             }
             @Override
             public void onFinish() {

@@ -7,23 +7,23 @@
     tools:context=".view.CheckoutActivity">
 
     <TextView
-        android:id="@+id/dish"
-        android:layout_width="wrap_content"
+        android:id="@+id/priceheadline"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:text="@string/_260_kg"
+        android:background="#FF9800"
+        android:backgroundTint="#FF9800"
+        android:text="@string/preis"
         android:textAlignment="center"
-        android:textSize="34sp"
+        android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dishheadline" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:singleLine="false"
@@ -33,20 +33,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priceheadline" />
-
-    <TextView
-        android:id="@+id/priceheadline"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="#FF9800"
-        android:backgroundTint="#FF9800"
-        android:text="@string/preis"
-        android:textAlignment="center"
-        android:textSize="60sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loadingtexthead" />
 
     <TextView
         android:id="@+id/dishheadline"
@@ -61,16 +47,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/price" />
 
+    <TextView
+        android:id="@+id/dish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:text="@string/_260_kg"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dishheadline" />
+
     <Button
         android:id="@+id/paybutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="#FF9800"
         android:text="@string/bezahlen"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/loadingscreen"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
@@ -78,25 +77,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginBottom="40dp"
         android:backgroundTint="#B1271C"
         android:text="@string/abbrechen"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/loadingscreen"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/dishname"
-        android:layout_width="312dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/gewichtetes_tagesgericht"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/loadingscreen" />
+        app:layout_constraintTop_toTopOf="@+id/paybutton" />
 
     <TextView
         android:id="@+id/loadingscreen"
