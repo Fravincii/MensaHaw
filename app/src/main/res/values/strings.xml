@@ -18,4 +18,6 @@
     <string name="zahlung_erfolgreich">Zahlung Erfolgreich!</string>
     <string name="button">Zurück zum Start</string>
     <string name="_22_3">22.3€</string>
+    <string name="bitte_warten">Bitte warten...</string>
+    <string name="ihr_gewicht_wird_gewogen">Ihr Gewicht wird gewogen!</string>
 </resources>

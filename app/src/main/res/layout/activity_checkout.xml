@@ -109,4 +109,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.62" />
+
+    <TextView
+        android:id="@+id/loadingscreen"
+        android:layout_width="415dp"
+        android:layout_height="730dp"
+        android:background="#FFFFFF"
+        android:text="Egal"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/loadingtexthead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ihr_gewicht_wird_gewogen"
+        android:textAlignment="center"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toBottomOf="@+id/loadingscreen"
+        app:layout_constraintEnd_toEndOf="@+id/loadingscreen"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/loadingscreen"
+        app:layout_constraintVertical_bias="0.195" />
+
+    <TextView
+        android:id="@+id/loadinscreentext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bitte_warten"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price"
+        app:layout_constraintVertical_bias="0.347" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
