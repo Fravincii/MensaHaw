@@ -22,6 +22,7 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
+
         checkoutViewModel = new ViewModelProvider(this).get(Checkout_ViewModel.class);
 
         MensaApplication mensaApplication = (MensaApplication) getApplication();
@@ -34,13 +35,12 @@ public class CheckoutActivity extends AppCompatActivity {
         //checkoutViewModel.setPriceInView();
         //checkoutViewModel.setDishNameInView("Hack mit Hack");
 
+        deactivateButtons();
         setPayOnClick();
         setCancelOnClick();
         activateDishNameObserver();
         activatePriceObserver();
     }
-
-    //TODO: Put Image view over everything with progressbar/waiting prompt and deactivate it when it loaded
     private void activatePriceObserver(){
         TextView priceView = findViewById(R.id.price);
         priceView.setText(String.valueOf(checkoutViewModel.getPrice()));
@@ -88,5 +88,25 @@ public class CheckoutActivity extends AppCompatActivity {
     public void openStartMenuView() {
         Intent changeView = new Intent(this, ProcessDescriptionActivity.class);
         startActivity(changeView);
+    }
+    public void quitLoadingScreen(){ //TODO LIO Implemment this method in your model
+        View loadingScreen = findViewById(R.id.loadingscreen);
+        View loadingScreenText = findViewById(R.id.loadingtexthead);
+        View loadingScreenHead = findViewById(R.id.loadinscreentext);
+        View payButton = findViewById(R.id.paybutton);
+        View cancelButton = findViewById(R.id.cancelbutton);
+
+        loadingScreen.setVisibility(View.GONE);
+        loadingScreenText.setVisibility(View.GONE);
+        loadingScreenHead.setVisibility(View.GONE);
+        payButton.setVisibility(View.VISIBLE);
+        cancelButton.setVisibility(View.VISIBLE);
+    }
+    public void deactivateButtons(){
+        View paybutton = findViewById(R.id.paybutton);
+        View cancelbutton = findViewById(R.id.cancelbutton);
+
+        paybutton.setVisibility(View.GONE);
+        cancelbutton.setVisibility(View.GONE);
     }
 }
