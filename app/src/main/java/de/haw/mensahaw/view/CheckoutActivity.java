@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import de.haw.mensahaw.R;
 import de.haw.mensahaw.viewmodel.*;
@@ -28,12 +29,11 @@ public class CheckoutActivity extends AppCompatActivity {
         MensaApplication mensaApplication = (MensaApplication) getApplication();
         checkoutViewModel.setProcessManager(mensaApplication.getProcessManager());
         checkoutViewModel.setCheckoutActivity(this);
+        checkoutViewModel.init();
 
         //getApplication().getConnect()
         // viewmodel.setConnect(connection);
 
-        //checkoutViewModel.setPriceInView();
-        //checkoutViewModel.setDishNameInView("Hack mit Hack");
 
         deactivateButtons();
         setPayOnClick();
@@ -86,10 +86,11 @@ public class CheckoutActivity extends AppCompatActivity {
         startActivity(changeView);
     }
     public void openStartMenuView() {
+        Toast.makeText(this, "Couldn't connect to Server, please check your internet connection!", Toast.LENGTH_LONG).show();
         Intent changeView = new Intent(this, ProcessDescriptionActivity.class);
         startActivity(changeView);
     }
-    public void quitLoadingScreen(){ //TODO LIO Implemment this method in your model
+    public void quitLoadingScreen(){
         View loadingScreen = findViewById(R.id.loadingscreen);
         View loadingScreenText = findViewById(R.id.loadingtexthead);
         View loadingScreenHead = findViewById(R.id.loadinscreentext);

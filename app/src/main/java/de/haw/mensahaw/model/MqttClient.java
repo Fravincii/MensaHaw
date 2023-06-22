@@ -25,6 +25,7 @@ public class MqttClient {
                   } else {
                       Log.info(String.format("Connected to '%s:%d'", host, port));
                       connectionSuccessful.set(true);
+                      mqttConnectionCallback.onConnectionSuccess();
                   }
               });
         return connectionSuccessful.get();
@@ -42,6 +43,11 @@ public class MqttClient {
                       subscriptionSuccess.set(true);
                   }
               });
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return subscriptionSuccess.get();
     }
 
@@ -59,6 +65,11 @@ public class MqttClient {
                 publishSuccess.set(true);
             }
         });
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return publishSuccess.get();
     }
     public boolean unsubscribe(String topic) {
@@ -74,6 +85,11 @@ public class MqttClient {
                 unsubscribeSuccess.set(true);
             }
         });
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return unsubscribeSuccess.get();
     }
 
@@ -91,6 +107,20 @@ public class MqttClient {
                 disconnectSuccess.set(true);
             }
         });
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
        return disconnectSuccess.get();
     }
+
+    public void setMqttConnectionCallback(MQTTConnectionCallback mqttConnectionCallback) {
+        this.mqttConnectionCallback = mqttConnectionCallback;
+    }
+    public void removeMqttConnectionCallback() {
+        this.mqttConnectionCallback = null;
+    }
+    private MQTTConnectionCallback mqttConnectionCallback;
+
 }

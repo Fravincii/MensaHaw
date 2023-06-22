@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +14,6 @@ import de.haw.mensahaw.viewmodel.*;
 
 public class WeightingInputActivity extends AppCompatActivity {
 
-    ProcessManager processManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,15 +24,12 @@ public class WeightingInputActivity extends AppCompatActivity {
         setWeightingOnClick();
     }
     private void processInit(){
-
         MensaApplication mensaApplication = (MensaApplication) getApplication();
-        processManager = new ProcessManager();
-        mensaApplication.setProcessManager(processManager);
+        mensaApplication.setProcessManager(new ProcessManager());
     }
 
     private void setWeightingOnClick(){
         Button weightingButton;
-
         weightingButton = findViewById(R.id.weightbutton);
         weightingButton.setOnClickListener(new View.OnClickListener(){
 
@@ -43,8 +40,6 @@ public class WeightingInputActivity extends AppCompatActivity {
     }
     public void openCheckoutView(){
         Intent changeView = new Intent(this, CheckoutActivity.class);
-        processManager.initMQTT();
-        processManager.waitForQRCode();
         startActivity(changeView);
     }
 }

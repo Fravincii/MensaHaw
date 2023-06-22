@@ -11,26 +11,29 @@ import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
 
 public class ProcessManager {
     private MQTTManager mqttManager;
-    private MensaApplication mensaApplication;
+
     private Database database;
 
     public void setDatabase(Database database) {
         this.database = database;
-    }
-    public void setMensaApplication(MensaApplication mensaApplication) {
-        this.mensaApplication = mensaApplication;
     }
 
     //Gets called when User presses Button
     public void initMQTT(){
         mqttManager = new MQTTManager();
         mqttManager.setDatabase(database);
+        startCountdown();
         mqttManager.connectToServer(true);
+        mqttManager.setMqttConnectionCallback(() ->{
+            waitForQRCode();
+            mqttManager.removeMqttConnectionCallback();
+        });
+
     }
     public void waitForQRCode(){
-        if (!mqttManager.subscribeToQRCode()) return;
 
-        startCountdown();
+        mqttManager.subscribeToQRCode();
+
         mqttManager.setQRCallback(qrCode -> {
             List<String> qrNormalPlatesList = Arrays.asList(database.QRCode_NORMAL_PLATES);
 
@@ -42,31 +45,41 @@ public class ProcessManager {
                 startPaying(currentDish);
             }
             else Log.error("No Result for this QRCode!");
+            mqttManager.removeQRCallback();
             mqttManager.unsubscribeFromQRCode();
         });
     }
 
     public void waitForWeight(){
-        if(!mqttManager.subscribeToWeight()) return;
-        //CountDownTimer timer = startCountdown(database.SCALE_WEIGHT);
+        mqttManager.subscribeToWeight();
 
         mqttManager.setScaleCallback(weight -> {
             receivedWeight = true;
             Dish weightedDish = weightedDish(weight);
+
             mqttManager.publishPrice(weightedDish.getPrice());
+
+            mqttManager.removeScaleCallback();
             mqttManager.unsubscribeFromWeight();
+
             startPaying(weightedDish);
         });
     }
     private boolean receivedWeight;
     private CountDownTimer startCountdown(){
-        CountDownTimer timer = new CountDownTimer(40000, 1000) {
+        CountDownTimer timer = new CountDownTimer(45000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                Log.info("timeLeft:" + millisUntilFinished);
+                if(millisUntilFinished < 20000) mqttManager.publishQRCode("1");
             }
             @Override
             public void onFinish() {
                 if(!receivedWeight){
+                    mqttManager.removeMqttConnectionCallback();
+                    mqttManager.removeQRCallback();
+                    mqttManager.removeScaleCallback();
+
                     mqttManager.unsubscribeFromQRCode();
                     mqttManager.unsubscribeFromWeight();
                     if(checkoutViewModel != null) checkoutViewModel.backToWeightingView();

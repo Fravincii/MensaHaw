@@ -27,7 +27,6 @@ public class MensaApplication extends Application {
 
     public void setProcessManager(ProcessManager processManager) {
         this.processManager = processManager;
-        processManager.setMensaApplication(this);
         processManager.setDatabase(database);
     }
 

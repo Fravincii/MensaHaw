@@ -13,8 +13,8 @@ public class MQTTManager {
 
     //TODO: Globale Application verbindungs instanz (Android FAQ)
 
-    public boolean connectToServer(boolean asUser){
-        if(mqtt != null) return false;
+    public void connectToServer(boolean asUser){
+        if(mqtt != null) return;
 
         this.asUser = asUser;
         final boolean connectToOnlineServer = true;
@@ -35,12 +35,10 @@ public class MQTTManager {
                     "my-user",
                     "my-password");
 
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        return success;
+        mqtt.setMqttConnectionCallback(() -> {
+            this.mqttConnectionCallback.onConnectionSuccess();
+            mqtt.removeMqttConnectionCallback();
+        });
     }
 
     //region Un-/Subscribe MQTT
@@ -92,8 +90,16 @@ public class MQTTManager {
     }
 
     //region Internal Callbacks
-    ScaleCallBack scaleCallBack;
-    QRCallback qrCallback;
+    private ScaleCallBack scaleCallBack;
+    private QRCallback qrCallback;
+    private MQTTConnectionCallback mqttConnectionCallback;
+
+    public void setMqttConnectionCallback(MQTTConnectionCallback mqttConnectionCallback){
+        this.mqttConnectionCallback = mqttConnectionCallback;
+    }
+    public void removeMqttConnectionCallback(){
+        mqttConnectionCallback = null;
+    }
     public void setScaleCallback(ScaleCallBack callback){
         this.scaleCallBack = callback;
     }
