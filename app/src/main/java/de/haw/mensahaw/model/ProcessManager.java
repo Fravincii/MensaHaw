@@ -65,10 +65,6 @@ public class ProcessManager {
         CountDownTimer timer = new CountDownTimer(40000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                //Log.info("time: " + millisUntilFinished);
-                //TODO: Delete Publishing for Testing
-                //if(millisUntilFinished < 20000) mqttManager.publishQRCode("1");
-                //if(millisUntilFinished < 10000) mqttManager.publishWeight(3.57f);
             }
             @Override
             public void onFinish() {

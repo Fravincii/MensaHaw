@@ -43,6 +43,7 @@ public class WeightingInputActivity extends AppCompatActivity {
     }
     public void openCheckoutView(){
         Intent changeView = new Intent(this, CheckoutActivity.class);
+        processManager.initMQTT();
         processManager.waitForQRCode();
         startActivity(changeView);
     }

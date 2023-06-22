@@ -18,16 +18,18 @@ public class MQTTManager {
 
         this.asUser = asUser;
         final boolean connectToOnlineServer = true;
+        boolean success;
+        
         mqtt = new MqttClient();
         if(connectToOnlineServer)
 
-        mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
+        success = mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
                 "broker.hivemq.com",
                 1883,
                 "my-user1",
                 "my-password");
         else
-            mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
+            success = mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
                     "10.0.2.2",
                     1883,
                     "my-user",
@@ -38,31 +40,14 @@ public class MQTTManager {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return true;
+        return success;
     }
 
     //region Un-/Subscribe MQTT
 
     public void unsubscribeFromWeight(){mqtt.unsubscribe(database.SCALE_WEIGHT);}
     public void unsubscribeFromQRCode(){mqtt.unsubscribe(database.QRSCANNER_QRCODE);}
-    /*
-    public void subscribeToWeight(){
-        subscribeToTopic(database.SCALE_WEIGHT);}
-    public void subscribeToQRCode(){
-        subscribeToTopic(database.QRSCANNER_QRCODE);}
-    private void subscribeToTopic(String topic){
-        backUp();
-        mqtt.subscribe(topic, (message) -> {
-            try {
-                String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
-                receiveData(topic, convertedMessageContent);
-            } catch (Exception e) {
-                //returns message as bytes
-                Log.error(String.format("Message from %s: %s", message.getTopic(), message.getPayloadAsBytes()) + ", error: " + e.getMessage());
-            }
-        });
-    }
-    */
+
     public void subscribeToWeight(){
         mqtt.subscribe(database.SCALE_WEIGHT, message -> {
             String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
@@ -80,29 +65,7 @@ public class MQTTManager {
         });
     }
     //endregion
-    /*
-    private void receiveData(String topic, String message) {
-        try {
-            if(topic == database.SCALE_WEIGHT){
-                float value = Float.parseFloat(message);
-                scaleCallBack.onWeightCallback(value);
-                Log.info(String.format("MESSAGE: The Scale weight: %skg", message));
-            }
-            else if(topic == database.QRSCANNER_QRCODE){
-                Log.info(String.format("MESSAGE: QR Code is %s", message));
-                qrCallback.onQRCallback(message);
-            }
-            else if(topic == database.SCALE_PRICE){
-                Log.info(String.format("MESSAGE: The Price of the Meal is: %s€ (Can be ignored)", message));
-            }
-            else {
-                Log.error(String.format("MESSAGE: The Topic was wrong!", message));
-            }
-        } catch (Exception e) {
-            Log.error(String.format("Message on %s was not a float value : %s", topic, message));
-        }
-    }
-*/
+
     private void ensureMQTTInitialized(){
         if (mqtt == null) {
             Log.error("MQTT Client is not inizialized!");
@@ -138,7 +101,5 @@ public class MQTTManager {
     public void setQRCallback(QRCallback callback){this.qrCallback = callback;}
     public void removeQRCallback(){this.qrCallback= null;};
     //endregion
-
-
 
 }
