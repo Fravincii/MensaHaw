@@ -6,26 +6,28 @@ public class MQTTManager {
     private MqttClient mqtt;
     private Database database;
 
+    private boolean asUser;
     public void setDatabase(Database database) {
         this.database = database;
     }
 
     //TODO: Globale Application verbindungs instanz (Android FAQ)
 
-    public boolean connectToServer(){
+    public boolean connectToServer(boolean asUser){
         if(mqtt != null) return false;
 
+        this.asUser = asUser;
         final boolean connectToOnlineServer = true;
         mqtt = new MqttClient();
         if(connectToOnlineServer)
 
-        mqtt.connectToBroker("my-mqtt-client-id1",
+        mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
                 "broker.hivemq.com",
                 1883,
                 "my-user1",
                 "my-password");
         else
-            mqtt.connectToBroker("myClientId",
+            mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
                     "10.0.2.2",
                     1883,
                     "my-user",
@@ -104,7 +106,7 @@ public class MQTTManager {
     private void ensureMQTTInitialized(){
         if (mqtt == null) {
             Log.error("MQTT Client is not inizialized!");
-            connectToServer();
+            connectToServer(asUser);
         }
     }
     //region MQTT Publishing

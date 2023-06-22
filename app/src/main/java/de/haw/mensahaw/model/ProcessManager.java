@@ -26,7 +26,7 @@ public class ProcessManager {
     public void initMQTT(){
         mqttManager = new MQTTManager();
         mqttManager.setDatabase(database);
-        mqttManager.connectToServer();
+        mqttManager.connectToServer(true);
     }
     public void waitForQRCode(){
 
