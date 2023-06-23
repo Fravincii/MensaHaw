@@ -78,10 +78,10 @@ public class ScanActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 123){
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.permission_granted, Toast.LENGTH_SHORT).show();
                 startScanning();
             } else {
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_SHORT).show();
             }
         }
     }

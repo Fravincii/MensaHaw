@@ -23,7 +23,7 @@ public class WeightingInputActivity extends AppCompatActivity {
     }
     private void processInit(){
         MensaApplication mensaApplication = (MensaApplication) getApplication();
-        mensaApplication.setProcessManager(new ProcessManager());
+        mensaApplication.initProcess();
     }
 
     private void setWeightingOnClick(){

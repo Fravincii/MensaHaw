@@ -11,21 +11,12 @@ public class MensaApplication extends Application {
         super.onCreate();
         database = new Database();
     }
-    public MensaApplication() {
-
-    }
-
     public Database getDatabase() {
         return database;
     }
-
-
-    public ProcessManager getProcessManager() {
-        return processManager;
-    }
-
-    public void setProcessManager(ProcessManager processManager) {
-        this.processManager = processManager;
+    public ProcessManager getProcessManager() {return processManager;}
+    public void initProcess(){
+        processManager = new ProcessManager();
         processManager.setDatabase(database);
     }
 

@@ -22,18 +22,12 @@ public class CheckoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
-
-
         checkoutViewModel = new ViewModelProvider(this).get(Checkout_ViewModel.class);
 
         MensaApplication mensaApplication = (MensaApplication) getApplication();
         checkoutViewModel.setProcessManager(mensaApplication.getProcessManager());
         checkoutViewModel.setCheckoutActivity(this);
         checkoutViewModel.init();
-
-        //getApplication().getConnect()
-        // viewmodel.setConnect(connection);
-
 
         deactivateButtons();
         setPayOnClick();
@@ -86,7 +80,7 @@ public class CheckoutActivity extends AppCompatActivity {
         startActivity(changeView);
     }
     public void openStartMenuView() {
-        Toast.makeText(this, "Couldn't connect to Server, please check your internet connection!", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.cannot_connect, Toast.LENGTH_LONG).show();
         Intent changeView = new Intent(this, ProcessDescriptionActivity.class);
         startActivity(changeView);
     }
