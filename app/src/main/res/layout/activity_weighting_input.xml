@@ -7,12 +7,14 @@
 
     <Button
         android:id="@+id/weightbutton"
-        android:layout_width="286dp"
-        android:layout_height="149dp"
-        android:layout_marginBottom="152dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="160dp"
         android:backgroundTint="#FF9800"
         android:text="@string/teller_ist_drauf"
-        android:textSize="34sp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -20,8 +22,12 @@
 
     <TextView
         android:id="@+id/weightinginstruction"
-        android:layout_width="409dp"
-        android:layout_height="233dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/platziere_deinen_teller_auf_die_waage_und_dr_cke_denn_knopf"
         android:textAlignment="center"
         android:textSize="48sp"
