@@ -2,8 +2,6 @@ package de.haw.mensahaw;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import de.haw.mensahaw.model.MQTTManager;
 
 /**

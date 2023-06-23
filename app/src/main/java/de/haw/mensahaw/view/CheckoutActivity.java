@@ -16,7 +16,7 @@ import de.haw.mensahaw.viewmodel.*;
 import de.haw.mensahaw.model.MensaApplication;
 
 public class CheckoutActivity extends AppCompatActivity {
-    public Checkout_ViewModel checkoutViewModel;
+    private Checkout_ViewModel checkoutViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +81,7 @@ public class CheckoutActivity extends AppCompatActivity {
             }
         });
     }
-    public void openCheckoutConfirmationView(){
+    private void openCheckoutConfirmationView(){
         Intent changeView = new Intent(this, CheckoutConfirmationActivity.class);
         startActivity(changeView);
     }

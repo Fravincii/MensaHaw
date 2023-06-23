@@ -1,15 +1,8 @@
 package de.haw.mensahaw.viewmodel;
 
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.io.Closeable;
-
-import de.haw.mensahaw.model.Dish;
-import de.haw.mensahaw.model.Log;
 import de.haw.mensahaw.model.ProcessManager;
 import de.haw.mensahaw.view.CheckoutActivity;
 
@@ -26,10 +19,9 @@ public class Checkout_ViewModel extends ViewModel  {
 
     public void init(){
         processManager.initMQTT();
-
     }
-    private MutableLiveData<Float> dishPrice = new MutableLiveData<>();
-    private MutableLiveData<String> dishName = new MutableLiveData<>();
+    private final MutableLiveData<Float> dishPrice = new MutableLiveData<>();
+    private final MutableLiveData<String> dishName = new MutableLiveData<>();
 
     public void backToWeightingView(){
         checkoutActivity.openStartMenuView();

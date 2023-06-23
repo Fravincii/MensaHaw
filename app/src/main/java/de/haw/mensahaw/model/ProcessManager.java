@@ -8,10 +8,8 @@ import java.util.List;
 
 import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
 
-
 public class ProcessManager {
     private MQTTManager mqttManager;
-
     private Database database;
 
     public void setDatabase(Database database) {
@@ -44,13 +42,13 @@ public class ProcessManager {
                 receivedWeight = true;
                 startPaying(currentDish);
             }
-            else Log.error("No Result for this QRCode!");
+            else {Log.error("No Result for this QRCode!"); return;}
             mqttManager.removeQRCallback();
             mqttManager.unsubscribeFromQRCode();
         });
     }
 
-    public void waitForWeight(){
+    private void waitForWeight(){
         mqttManager.subscribeToWeight();
 
         mqttManager.setScaleCallback(weight -> {
@@ -99,14 +97,11 @@ public class ProcessManager {
         this.checkoutViewModel = checkoutViewModel;
     }
 
-    public void startPaying(Dish dishToPay){
+    private void startPaying(Dish dishToPay){
         if (checkoutViewModel == null) {startPaying(dishToPay); return;}
         Log.info("Dish is: " + dishToPay.getName());
         checkoutViewModel.showCheckout();
         checkoutViewModel.setPriceInView(dishToPay.getPrice());
         checkoutViewModel.setDishNameInView(dishToPay.getName());
-    }
-    public void endProcess(){
-        mqttManager.disconnectFromServer();
     }
 }

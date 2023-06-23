@@ -17,19 +17,18 @@ public class MQTTManager {
         if(mqtt != null) return;
 
         this.asUser = asUser;
+        //Testing only
         final boolean connectToOnlineServer = false;
-        boolean success;
 
         mqtt = new MqttClient();
         if(connectToOnlineServer)
-
-        success = mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
+            mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
                 "broker.hivemq.com",
                 1883,
                 "my-user1",
                 "my-password");
         else
-            success = mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
+            mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
                     "10.0.2.2",
                     1883,
                     "my-user",
@@ -43,19 +42,19 @@ public class MQTTManager {
 
     //region Un-/Subscribe MQTT
 
-    public boolean unsubscribeFromWeight(){return mqtt.unsubscribe(database.SCALE_WEIGHT);}
-    public boolean unsubscribeFromQRCode(){return mqtt.unsubscribe(database.QRSCANNER_QRCODE);}
+    public void unsubscribeFromWeight(){mqtt.unsubscribe(database.SCALE_WEIGHT);}
+    public void unsubscribeFromQRCode(){mqtt.unsubscribe(database.QRSCANNER_QRCODE);}
 
-    public boolean subscribeToWeight(){
-        return mqtt.subscribe(database.SCALE_WEIGHT, message -> {
+    public void subscribeToWeight(){
+        mqtt.subscribe(database.SCALE_WEIGHT, message -> {
             String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
             float value = Float.parseFloat(convertedMessageContent);
             scaleCallBack.onWeightCallback(value);
             Log.info(String.format("MESSAGE: The Scale weight: %skg", convertedMessageContent));
         });
     }
-    public boolean subscribeToQRCode(){
-       return mqtt.subscribe(database.QRSCANNER_QRCODE, message -> {
+    public void subscribeToQRCode(){
+       mqtt.subscribe(database.QRSCANNER_QRCODE, message -> {
             String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
             qrCallback.onQRCallback(convertedMessageContent);
             Log.info(String.format("MESSAGE: QR Code is %s", convertedMessageContent));
@@ -71,22 +70,23 @@ public class MQTTManager {
         }
     }
     //region MQTT Publishing
-    public boolean publishPrice(Float price){
+    public void publishPrice(Float price){
         ensureMQTTInitialized();
-        return mqtt.publish(database.SCALE_PRICE, price.toString());
+        mqtt.publish(database.SCALE_PRICE, price.toString());
     }
-    public boolean publishWeight(Float weigth){
+    //Testing only
+    public void publishWeight(Float weight){
         ensureMQTTInitialized();
-        return mqtt.publish(database.SCALE_WEIGHT, weigth.toString());
+        mqtt.publish(database.SCALE_WEIGHT, weight.toString());
     }
-    public boolean publishQRCode(String QRCode){
+    public void publishQRCode(String QRCode){
         ensureMQTTInitialized();
-        return mqtt.publish(database.QRSCANNER_QRCODE, QRCode);
+        mqtt.publish(database.QRSCANNER_QRCODE, QRCode);
     }
     //endregion
 
-    public boolean disconnectFromServer(){
-        return mqtt.disconnect();
+    public void disconnectFromServer(){
+        mqtt.disconnect();
     }
 
     //region Internal Callbacks

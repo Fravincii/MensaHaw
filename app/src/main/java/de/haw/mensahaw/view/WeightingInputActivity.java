@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import de.haw.mensahaw.R;
 import de.haw.mensahaw.model.*;
-import de.haw.mensahaw.viewmodel.*;
 
 public class WeightingInputActivity extends AppCompatActivity {
 
@@ -38,7 +36,7 @@ public class WeightingInputActivity extends AppCompatActivity {
             }
         });
     }
-    public void openCheckoutView(){
+    private void openCheckoutView(){
         Intent changeView = new Intent(this, CheckoutActivity.class);
         startActivity(changeView);
     }
