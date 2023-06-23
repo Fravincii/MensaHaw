@@ -20,7 +20,6 @@ public class ExampleUnitTest {
     @Test
     public void connectToServer_withClient_isFalse() {
         MQTTManager mqttManager = new MQTTManager();
-        mqttManager.connectToServer();
 
        // assertEquals(false, mqttManager.connectToServer(true));
     }

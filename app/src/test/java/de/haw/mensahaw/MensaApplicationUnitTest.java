@@ -8,6 +8,9 @@ import de.haw.mensahaw.model.Database;
 import de.haw.mensahaw.model.MensaApplication;
 import de.haw.mensahaw.model.ProcessManager;
 import static org.junit.Assert.*;
+
+import android.app.Application;
+
 import org.junit.*;
 public class MensaApplicationUnitTest {
 

@@ -4,7 +4,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 public class MQTTManager {
-    private MqttClient mqtt;
+    public void setMqttClient(MqttClient mqttClient) {
+        this.mqttClient = mqttClient;
+    }
+
+    private MqttClient mqttClient;
     private Database database;
 
     public void setDatabase(Database database) {
@@ -14,39 +18,41 @@ public class MQTTManager {
     //TODO: Globale Application verbindungs instanz (Android FAQ)
 
     public void connectToServer(){
-        if(mqtt != null) return;
+        if(mqttClient != null) return;
 
         //Testing only
         final boolean connectToOnlineServer = false;
         final String randomId = UUID.randomUUID().toString();
-        mqtt = new MqttClient();
+        mqttClient = new MqttClient();
 
         if(connectToOnlineServer)
-            mqtt.connectToBroker(randomId,
+            mqttClient.connectToBroker(randomId,
                 "broker.hivemq.com",
                 1883,
                     randomId,
                 "my-password");
         else
-            mqtt.connectToBroker(randomId,
+            mqttClient.connectToBroker(randomId,
                     "10.0.2.2",
                     1883,
                         randomId,
                     "my-password");
 
-        mqtt.setMqttConnectionCallback(() -> {
+        mqttClient.setMqttConnectionCallback(() -> {
             this.mqttConnectionCallback.onConnectionSuccess();
-            mqtt.removeMqttConnectionCallback();
+            mqttClient.removeMqttConnectionCallback();
         });
     }
 
     //region Un-/Subscribe MQTT
 
-    public void unsubscribeFromWeight(){mqtt.unsubscribe(database.SCALE_WEIGHT);}
-    public void unsubscribeFromQRCode(){mqtt.unsubscribe(database.QRSCANNER_QRCODE);}
+    public void unsubscribeFromWeight(){
+        mqttClient.unsubscribe(database.SCALE_WEIGHT);}
+    public void unsubscribeFromQRCode(){
+        mqttClient.unsubscribe(database.QRSCANNER_QRCODE);}
 
     public void subscribeToWeight(){
-        mqtt.subscribe(database.SCALE_WEIGHT, message -> {
+        mqttClient.subscribe(database.SCALE_WEIGHT, message -> {
             String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
             float value = Float.parseFloat(convertedMessageContent);
             scaleCallBack.onWeightCallback(value);
@@ -54,7 +60,7 @@ public class MQTTManager {
         });
     }
     public void subscribeToQRCode(){
-       mqtt.subscribe(database.QRSCANNER_QRCODE, message -> {
+       mqttClient.subscribe(database.QRSCANNER_QRCODE, message -> {
             String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
             qrCallback.onQRCallback(convertedMessageContent);
             Log.info(String.format("MESSAGE: QR Code is %s", convertedMessageContent));
@@ -64,7 +70,7 @@ public class MQTTManager {
     //endregion
 
     private void ensureMQTTInitialized(){
-        if (mqtt == null) {
+        if (mqttClient == null) {
             Log.error("MQTT Client is not inizialized!");
             connectToServer();
         }
@@ -72,21 +78,21 @@ public class MQTTManager {
     //region MQTT Publishing
     public void publishPrice(Float price){
         ensureMQTTInitialized();
-        mqtt.publish(database.SCALE_PRICE, price.toString());
+        mqttClient.publish(database.SCALE_PRICE, price.toString());
     }
     //Testing only
     public void publishWeight(Float weight){
         ensureMQTTInitialized();
-        mqtt.publish(database.SCALE_WEIGHT, weight.toString());
+        mqttClient.publish(database.SCALE_WEIGHT, weight.toString());
     }
     public void publishQRCode(String QRCode){
         ensureMQTTInitialized();
-        mqtt.publish(database.QRSCANNER_QRCODE, QRCode);
+        mqttClient.publish(database.QRSCANNER_QRCODE, QRCode);
     }
     //endregion
 
     public void disconnectFromServer(){
-        mqtt.disconnect();
+        mqttClient.disconnect();
     }
 
     //region Internal Callbacks

@@ -15,7 +15,6 @@ public class Checkout_ViewModel extends ViewModel  {
     }
     public void setProcessManager(@NonNull ProcessManager processManager) {
         this.processManager = processManager;
-
     }
 
     public void initMQTT(){

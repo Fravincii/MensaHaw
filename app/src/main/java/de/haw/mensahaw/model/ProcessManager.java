@@ -34,7 +34,6 @@ public class ProcessManager {
             waitForQRCode();
             mqttManager.removeMqttConnectionCallback();
         });
-
     }
     public void waitForQRCode(){
 
@@ -105,14 +104,17 @@ public class ProcessManager {
         return new Dish(database.todaysWeightedDishName, endPrice);
     }
 
+
+
     private Checkout_ViewModel checkoutViewModel;
     public void setCheckoutViewModel(Checkout_ViewModel checkoutViewModel) {
         this.checkoutViewModel = checkoutViewModel;
     }
-
-    private void startPaying(Dish dishToPay){
+    public Checkout_ViewModel getCheckoutViewModel() {
+        return checkoutViewModel;
+    }
+    public void startPaying(Dish dishToPay){
         if (checkoutViewModel == null) {startPaying(dishToPay); return;}
-        Log.info("Dish is: " + dishToPay.getName());
         checkoutViewModel.showCheckout();
         checkoutViewModel.setPriceInView(dishToPay.getPrice());
         checkoutViewModel.setDishNameInView(dishToPay.getName());

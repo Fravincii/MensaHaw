@@ -1,5 +1,7 @@
 package de.haw.mensahaw.model;
 
+import androidx.annotation.NonNull;
+
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
 import com.hivemq.client.mqtt.mqtt3.message.publish.Mqtt3Publish;
 import com.hivemq.client.mqtt.mqtt3.message.unsubscribe.Mqtt3Unsubscribe;
@@ -8,10 +10,14 @@ import java.util.function.Consumer;
 
 public class MqttClient {
 
+    public void setClient(Mqtt3AsyncClient client) {
+        this.client = client;
+    }
+
     private Mqtt3AsyncClient client;
 
-    public void connectToBroker(String identifier, String host, int port, String username, String password) {
-        client = com.hivemq.client.mqtt.MqttClient.builder().useMqttVersion3().identifier(identifier).serverHost(host)
+    public void connectToBroker( String identifier, String host, int port, String username,  String password) {
+        if(client == null) client = com.hivemq.client.mqtt.MqttClient.builder().useMqttVersion3().identifier(identifier).serverHost(host)
                                                   .serverPort(port).buildAsync();
 
         client.connectWith().simpleAuth().username(username).password(password.getBytes()).applySimpleAuth().send()

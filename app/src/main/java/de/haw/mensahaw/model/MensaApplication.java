@@ -14,7 +14,7 @@ public class MensaApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        setDatabase(new Database());
+        if (database == null) setDatabase(new Database());
     }
     public void initProcess(){
         if(processManager == null) processManager = new ProcessManager();
