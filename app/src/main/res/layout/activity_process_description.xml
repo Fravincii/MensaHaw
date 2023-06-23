@@ -8,160 +8,47 @@
     tools:layout_editor_absoluteX="-21dp"
     tools:layout_editor_absoluteY="1dp">
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="153dp"
-        android:layout_height="130dp"
-        android:rotation="-12"
-        app:layout_constraintBottom_toBottomOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/journeybubble1"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeText"
-        app:layout_constraintVertical_bias="0.312"
-        app:srcCompat="@drawable/img" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="109dp"
-        android:layout_height="90dp"
-        android:rotation="-25"
-        android:rotationY="-180"
-        app:layout_constraintBottom_toTopOf="@+id/Journeybubble3"
-        app:layout_constraintEnd_toStartOf="@+id/journeybubble2"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/journeybubble1"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/img" />
-
-    <ImageView
-        android:id="@+id/journeybubble1"
-        android:layout_width="135dp"
-        android:layout_height="96dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/welcomeText"
-        app:layout_constraintVertical_bias="0.253"
-        app:srcCompat="@drawable/ovalshape" />
-
-    <ImageView
-        android:id="@+id/journeybubble2"
-        android:layout_width="144dp"
-        android:layout_height="111dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.898"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/welcomeText"
-        app:layout_constraintVertical_bias="0.433"
-        app:srcCompat="@drawable/ovalshape" />
-
-    <ImageView
-        android:id="@+id/Journeybubble3"
-        android:layout_width="246dp"
-        android:layout_height="98dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/welcomeText"
-        app:layout_constraintVertical_bias="0.611"
-        app:srcCompat="@drawable/ovalshape" />
-
     <TextView
         android:id="@+id/welcomeText"
-        android:layout_width="423dp"
-        android:layout_height="123dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:background="#FF9800"
         android:text="@string/wilkommen_bei_easy_mensa"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="48sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/userjourney1"
-        android:layout_width="123dp"
-        android:layout_height="33dp"
-        android:text="@string/teller_rauf"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.145"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276" />
-
-    <TextView
-        android:id="@+id/userjourney2"
-        android:layout_width="136dp"
-        android:layout_height="37dp"
-        android:text="@string/geld_hinaus"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.901"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.442" />
-
-    <TextView
-        android:id="@+id/userjourney3"
-        android:layout_width="118dp"
-        android:layout_height="76dp"
-        android:text="@string/essen_im_bauch"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.208"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.615" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/startingbuttonshadow"
-        android:layout_width="269dp"
-        android:layout_height="74dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
         android:backgroundTint="#000000"
         android:text="@string/loslegen"
         android:textAlignment="center"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeText"
-        app:layout_constraintVertical_bias="0.899" />
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/startingbutton"
-        android:layout_width="269dp"
-        android:layout_height="74dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         android:backgroundTint="#FF9800"
         android:text="@string/loslegen"
         android:textAlignment="center"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeText"
-        app:layout_constraintVertical_bias="0.913" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
@@ -175,15 +62,38 @@
 
     <Button
         android:id="@+id/qrbutton"
-        android:layout_width="201dp"
-        android:layout_height="63dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="60dp"
         android:background="#00FFFFFF"
         android:backgroundTint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/welcomeText"
-        app:layout_constraintVertical_bias="0.044" />
+        app:layout_constraintTop_toTopOf="@+id/welcomeText" />
+
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/startingbuttonshadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeText"
+        app:srcCompat="@drawable/journey" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
