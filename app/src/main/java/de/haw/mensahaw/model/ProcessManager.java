@@ -80,7 +80,7 @@ public class ProcessManager {
 
                     mqttManager.unsubscribeFromQRCode();
                     mqttManager.unsubscribeFromWeight();
-                    if(checkoutViewModel != null) checkoutViewModel.backToWeightingView();
+                    if(checkoutViewModel != null) checkoutViewModel.openPlatePromptView();
                 }
 
             }

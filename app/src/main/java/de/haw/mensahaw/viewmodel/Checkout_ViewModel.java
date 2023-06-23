@@ -23,8 +23,8 @@ public class Checkout_ViewModel extends ViewModel  {
     private final MutableLiveData<Float> dishPrice = new MutableLiveData<>();
     private final MutableLiveData<String> dishName = new MutableLiveData<>();
 
-    public void backToWeightingView(){
-        checkoutActivity.openStartMenuView();
+    public void openPlatePromptView(){
+        checkoutActivity.openStartView();
     }
     public void showCheckout(){
         checkoutActivity.runOnUiThread(() -> checkoutActivity.quitLoadingScreen());

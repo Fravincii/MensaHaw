@@ -22,20 +22,21 @@ public class CheckoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+
         checkoutViewModel = new ViewModelProvider(this).get(Checkout_ViewModel.class);
 
         MensaApplication mensaApplication = (MensaApplication) getApplication();
         checkoutViewModel.setProcessManager(mensaApplication.getProcessManager());
         checkoutViewModel.setCheckoutActivity(this);
-        checkoutViewModel.init();
+        checkoutViewModel.init(); //TODO Lio Clean this up <3
 
-        deactivateButtons();
+        hideButtons();
         setPayOnClick();
         setCancelOnClick();
-        activateDishNameObserver();
-        activatePriceObserver();
+        startDishNameObserver();
+        startPriceObserver();
     }
-    private void activatePriceObserver(){
+    private void startPriceObserver(){
         TextView priceView = findViewById(R.id.price);
         priceView.setText(String.valueOf(checkoutViewModel.getPrice()));
         checkoutViewModel.getPrice().observe(this, new Observer<Float>() {
@@ -44,10 +45,8 @@ public class CheckoutActivity extends AppCompatActivity {
                 priceView.setText(String.valueOf(updatedPrice));
             }
         });
-
     }
-
-    private void activateDishNameObserver(){
+    private void startDishNameObserver(){
         TextView dishNameView = findViewById(R.id.dish);
         dishNameView.setText(String.valueOf(checkoutViewModel.getDishName()));
         checkoutViewModel.getDishName().observe(this, new Observer<String>() {
@@ -62,7 +61,7 @@ public class CheckoutActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancelbutton);
         cancelButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                openStartMenuView();
+                openStartView();
             }
         });
     }
@@ -71,17 +70,17 @@ public class CheckoutActivity extends AppCompatActivity {
         payButton =  findViewById(R.id.paybutton);
         payButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                openCheckoutConfirmationView();
+                openPayConfirmationView();
             }
         });
     }
-    private void openCheckoutConfirmationView(){
-        Intent changeView = new Intent(this, CheckoutConfirmationActivity.class);
+    private void openPayConfirmationView(){
+        Intent changeView = new Intent(this, PayConfirmationActivity.class);
         startActivity(changeView);
     }
-    public void openStartMenuView() {
+    public void openStartView() {
         Toast.makeText(this, R.string.cannot_connect, Toast.LENGTH_LONG).show();
-        Intent changeView = new Intent(this, ProcessDescriptionActivity.class);
+        Intent changeView = new Intent(this, StartActivity.class);
         startActivity(changeView);
     }
     public void quitLoadingScreen(){
@@ -94,14 +93,15 @@ public class CheckoutActivity extends AppCompatActivity {
         loadingScreen.setVisibility(View.GONE);
         loadingScreenText.setVisibility(View.GONE);
         loadingScreenHead.setVisibility(View.GONE);
+
         payButton.setVisibility(View.VISIBLE);
         cancelButton.setVisibility(View.VISIBLE);
     }
-    public void deactivateButtons(){
-        View paybutton = findViewById(R.id.paybutton);
-        View cancelbutton = findViewById(R.id.cancelbutton);
+    public void hideButtons(){
+        View payButton = findViewById(R.id.paybutton);
+        View cancelButton = findViewById(R.id.cancelbutton);
 
-        paybutton.setVisibility(View.GONE);
-        cancelbutton.setVisibility(View.GONE);
+        payButton.setVisibility(View.GONE);
+        cancelButton.setVisibility(View.GONE);
     }
 }

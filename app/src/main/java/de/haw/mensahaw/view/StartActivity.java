@@ -9,44 +9,40 @@ import android.widget.Button;
 
 import de.haw.mensahaw.R;
 
-public class ProcessDescriptionActivity extends AppCompatActivity {
-
+public class StartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_process_description);
+        setContentView(R.layout.activity_start);
 
         setStartOnClick();
-        setQROnClick();
+        setHiddenToScannerOnClick();
     }
-
-
     private void setStartOnClick(){
         Button startButton;
         startButton =  findViewById(R.id.startingbutton);
         startButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                openWeightingView();
+                openPlatePromptView();
             }
         });
     }
-    private void setQROnClick(){
-        Button qrButton;
-        qrButton = findViewById(R.id.qrbutton);
-        qrButton.setOnClickListener(new View.OnClickListener(){
+    private void setHiddenToScannerOnClick(){
+        Button toScannerButton;
+        toScannerButton = findViewById(R.id.toscannerbutton);
+        toScannerButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                openQR();
+                openScannerView();
             }
         });
     }
-    public void openWeightingView(){
-        Intent changeView = new Intent(this, WeightingInputActivity.class);
+    public void openPlatePromptView(){
+        Intent changeView = new Intent(this, PlatePromptActivity.class);
         startActivity(changeView);
     }
-    //TODO: Bennen die scheise gut
-    public void openQR(){
-        Intent changeView = new Intent(this, ScanActivity.class);
+    public void openScannerView(){
+        Intent changeView = new Intent(this, ScannerActivity.class);
         startActivity(changeView);
     }
 }

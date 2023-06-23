@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/weightbutton"
+        android:id="@+id/plateconfirmation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -31,7 +31,7 @@
         android:text="@string/platziere_deinen_teller_auf_die_waage_und_dr_cke_denn_knopf"
         android:textAlignment="center"
         android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@+id/weightbutton"
+        app:layout_constraintBottom_toTopOf="@+id/plateconfirmation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

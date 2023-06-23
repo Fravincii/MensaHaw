@@ -23,12 +23,12 @@ import de.haw.mensahaw.R;
 import de.haw.mensahaw.model.MQTTManager;
 import de.haw.mensahaw.model.MensaApplication;
 
-public class ScanActivity extends AppCompatActivity {
+public class ScannerActivity extends AppCompatActivity {
     private MQTTManager mqttManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan);
+        setContentView(R.layout.activity_scanner);
 
         mqttInit();
         setReturnOnClick();
@@ -65,7 +65,7 @@ public class ScanActivity extends AppCompatActivity {
         });
     }
     public void openStartMenuView(){
-        Intent changeView = new Intent(this, ProcessDescriptionActivity.class);
+        Intent changeView = new Intent(this, StartActivity.class);
         startActivity(changeView);
     }
 
@@ -101,7 +101,7 @@ public class ScanActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(ScanActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ScannerActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
                         mqttManager.publishQRCode(result.getText());
                     }
                 });

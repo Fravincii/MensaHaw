@@ -9,12 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import de.haw.mensahaw.R;
 
-public class CheckoutConfirmationActivity extends AppCompatActivity {
+public class PayConfirmationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkout_confirmation);
+        setContentView(R.layout.activity_pay_confirmation);
 
         setReturnOnClick();
 
@@ -24,12 +24,12 @@ public class CheckoutConfirmationActivity extends AppCompatActivity {
         returnButton = findViewById(R.id.backtomenu);
         returnButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                openStartMenuView();
+                openStartView();
             }
         });
     }
-    public void openStartMenuView(){
-        Intent changeView = new Intent(this, ProcessDescriptionActivity.class);
+    public void openStartView(){
+        Intent changeView = new Intent(this, StartActivity.class);
         startActivity(changeView);
     }
 }

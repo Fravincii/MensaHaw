@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ProcessDescriptionActivity"
+    tools:context=".view.StartActivity"
     tools:layout_editor_absoluteX="-21dp"
     tools:layout_editor_absoluteY="1dp">
 
@@ -61,7 +61,7 @@
         app:layout_constraintTop_toTopOf="@+id/welcomeText" />
 
     <Button
-        android:id="@+id/qrbutton"
+        android:id="@+id/toscannerbutton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
