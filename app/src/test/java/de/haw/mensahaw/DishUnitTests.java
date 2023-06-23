@@ -1,8 +1,10 @@
 package de.haw.mensahaw;
 
 import org.junit.Test;
+import org.mockito.*;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import de.haw.mensahaw.model.Dish;
 

@@ -43,7 +43,7 @@ public class ScannerActivity extends AppCompatActivity {
         mqttManager = new MQTTManager();
         MensaApplication mensaApplication = (MensaApplication)getApplication();
         mqttManager.setDatabase(mensaApplication.getDatabase());
-        mqttManager.connectToServer(false);
+        mqttManager.connectToServer();
 
     }
     @Override

@@ -9,6 +9,14 @@ import java.util.List;
 import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
 
 public class ProcessManager {
+    public MQTTManager getMqttManager() {
+        return mqttManager;
+    }
+
+    public void setMqttManager(MQTTManager mqttManager) {
+        this.mqttManager = mqttManager;
+    }
+
     private MQTTManager mqttManager;
     private Database database;
 
@@ -18,10 +26,10 @@ public class ProcessManager {
 
     //Gets called when User presses Button
     public void initMQTT(){
-        mqttManager = new MQTTManager();
+        if(mqttManager == null) mqttManager = new MQTTManager();
         mqttManager.setDatabase(database);
-        startCountdown();
-        mqttManager.connectToServer(true);
+        if (countDownTimer == null) startCountdown();
+        mqttManager.connectToServer();
         mqttManager.setMqttConnectionCallback(() ->{
             waitForQRCode();
             mqttManager.removeMqttConnectionCallback();
@@ -64,7 +72,13 @@ public class ProcessManager {
         });
     }
     private boolean receivedWeight;
-    private CountDownTimer startCountdown(){
+
+    public void setCountDownTimer(CountDownTimer countDownTimer) {
+        this.countDownTimer = countDownTimer;
+    }
+
+    private CountDownTimer countDownTimer;
+    public void startCountdown(){
         CountDownTimer timer = new CountDownTimer(45000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -85,7 +99,6 @@ public class ProcessManager {
 
             }
         }.start();
-        return timer;
     }
     private Dish weightedDish(float weight){
         float endPrice = weight * database.PRICE_PERKG_WEIGHTED_PLATE;

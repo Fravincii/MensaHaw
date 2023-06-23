@@ -1,37 +1,37 @@
 package de.haw.mensahaw.model;
 
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 public class MQTTManager {
     private MqttClient mqtt;
     private Database database;
 
-    private boolean asUser;
     public void setDatabase(Database database) {
         this.database = database;
     }
 
     //TODO: Globale Application verbindungs instanz (Android FAQ)
 
-    public void connectToServer(boolean asUser){
+    public void connectToServer(){
         if(mqtt != null) return;
 
-        this.asUser = asUser;
         //Testing only
         final boolean connectToOnlineServer = false;
-
+        final String randomId = UUID.randomUUID().toString();
         mqtt = new MqttClient();
+
         if(connectToOnlineServer)
-            mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
+            mqtt.connectToBroker(randomId,
                 "broker.hivemq.com",
                 1883,
-                "my-user1",
+                    randomId,
                 "my-password");
         else
-            mqtt.connectToBroker(asUser? "my-mqtt-client-id" : "my-mqtt-client-id1",
+            mqtt.connectToBroker(randomId,
                     "10.0.2.2",
                     1883,
-                    "my-user",
+                        randomId,
                     "my-password");
 
         mqtt.setMqttConnectionCallback(() -> {
@@ -66,7 +66,7 @@ public class MQTTManager {
     private void ensureMQTTInitialized(){
         if (mqtt == null) {
             Log.error("MQTT Client is not inizialized!");
-            connectToServer(asUser);
+            connectToServer();
         }
     }
     //region MQTT Publishing

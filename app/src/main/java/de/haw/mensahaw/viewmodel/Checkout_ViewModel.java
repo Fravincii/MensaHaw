@@ -1,5 +1,6 @@
 package de.haw.mensahaw.viewmodel;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -12,12 +13,13 @@ public class Checkout_ViewModel extends ViewModel  {
     public void setCheckoutActivity(CheckoutActivity checkoutActivity) {
         this.checkoutActivity = checkoutActivity;
     }
-    public void setProcessManager(ProcessManager processManager) {
+    public void setProcessManager(@NonNull ProcessManager processManager) {
         this.processManager = processManager;
-        processManager.setCheckoutViewModel(this);
+
     }
 
-    public void init(){
+    public void initMQTT(){
+        processManager.setCheckoutViewModel(this);
         processManager.initMQTT();
     }
     private final MutableLiveData<Float> dishPrice = new MutableLiveData<>();

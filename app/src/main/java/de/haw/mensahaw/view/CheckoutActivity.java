@@ -23,12 +23,7 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
-        checkoutViewModel = new ViewModelProvider(this).get(Checkout_ViewModel.class);
-
-        MensaApplication mensaApplication = (MensaApplication) getApplication();
-        checkoutViewModel.setProcessManager(mensaApplication.getProcessManager());
-        checkoutViewModel.setCheckoutActivity(this);
-        checkoutViewModel.init(); //TODO Lio Clean this up <3
+        checkoutInit();
 
         hideButtons();
         setPayOnClick();
@@ -36,6 +31,13 @@ public class CheckoutActivity extends AppCompatActivity {
         startDishNameObserver();
         startPriceObserver();
     }
+    private void checkoutInit(){
+        checkoutViewModel = new ViewModelProvider(this).get(Checkout_ViewModel.class);
+        MensaApplication mensaApplication = (MensaApplication) getApplication();
+        checkoutViewModel.setProcessManager(mensaApplication.getProcessManager());
+        checkoutViewModel.setCheckoutActivity(this);
+        checkoutViewModel.initMQTT();
+    };
     private void startPriceObserver(){
         TextView priceView = findViewById(R.id.price);
         priceView.setText(String.valueOf(checkoutViewModel.getPrice()));
