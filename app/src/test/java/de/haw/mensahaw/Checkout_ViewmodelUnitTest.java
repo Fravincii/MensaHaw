@@ -12,12 +12,12 @@ public class Checkout_ViewmodelUnitTest {
     @Test
     public void get_dishName(){
         Checkout_ViewModel checkoutViewModel = new Checkout_ViewModel();
-        MutableLiveData<String> expectedResult = new MutableLiveData<>();
-        expectedResult.setValue("Döner");
+        MutableLiveData<String> expectedResult = mock(MutableLiveData.class);
+        expectedResult.postValue("Döner");
 
         checkoutViewModel.setDishNameInView("Döner");
-        MutableLiveData<String> actualResult = checkoutViewModel.getDishName();
+        String actualResult = checkoutViewModel.getDishName().toString();
 
-        assertEquals(expectedResult.getValue(),actualResult.getValue());
+        assertEquals(expectedResult.getValue(),actualResult);
     }
 }

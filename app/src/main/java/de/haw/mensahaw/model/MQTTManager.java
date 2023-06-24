@@ -8,6 +8,10 @@ public class MQTTManager {
         this.mqttClient = mqttClient;
     }
 
+    public MqttClient getMqttClient() {
+        return mqttClient;
+    }
+
     private MqttClient mqttClient;
     private Database database;
 
@@ -71,7 +75,7 @@ public class MQTTManager {
 
     private void ensureMQTTInitialized(){
         if (mqttClient == null) {
-            Log.error("MQTT Client is not inizialized!");
+            //Log.error("MQTT Client is not inizialized!");
             connectToServer();
         }
     }
