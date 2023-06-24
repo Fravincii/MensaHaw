@@ -2,6 +2,10 @@ package de.haw.mensahaw.model;
 
 import android.os.CountDownTimer;
 
+import androidx.annotation.NonNull;
+
+import org.jetbrains.annotations.Contract;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,10 +13,7 @@ import java.util.List;
 import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
 
 public class ProcessManager {
-    public MQTTManager getMqttManager() {
-        return mqttManager;
-    }
-
+    public MQTTManager getMqttManager() {return mqttManager;}
     public void setMqttManager(MQTTManager mqttManager) {
         this.mqttManager = mqttManager;
     }
@@ -30,7 +31,7 @@ public class ProcessManager {
         mqttManager.setDatabase(database);
         if (countDownTimer == null) startCountdown();
         mqttManager.connectToServer();
-        mqttManager.setMqttConnectionCallback(() ->{
+        mqttManager.setMQTTConnectionCallback(() ->{
             waitForQRCode();
             mqttManager.removeMqttConnectionCallback();
         });
@@ -70,15 +71,21 @@ public class ProcessManager {
             startPaying(weightedDish);
         });
     }
+
+    public boolean isReceivedWeight() {return receivedWeight;}
+    public void setReceivedWeight(boolean receivedWeight) {this.receivedWeight = receivedWeight;}
+
     private boolean receivedWeight;
 
     public void setCountDownTimer(CountDownTimer countDownTimer) {
         this.countDownTimer = countDownTimer;
     }
 
+    public CountDownTimer getCountDownTimer() {return countDownTimer;}
+
     private CountDownTimer countDownTimer;
     public void startCountdown(){
-        CountDownTimer timer = new CountDownTimer(45000, 1000) {
+        countDownTimer = new CountDownTimer(45000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.info("timeLeft:" + millisUntilFinished);
@@ -99,8 +106,10 @@ public class ProcessManager {
             }
         }.start();
     }
-    private Dish weightedDish(float weight){
-        float endPrice = weight * database.PRICE_PERKG_WEIGHTED_PLATE;
+    @NonNull
+    @Contract(value = "_ -> new", pure = true)
+    public Dish weightedDish(float weight){
+        final float endPrice = weight * database.PRICE_PERKG_WEIGHTED_PLATE;
         return new Dish(database.todaysWeightedDishName, endPrice);
     }
 

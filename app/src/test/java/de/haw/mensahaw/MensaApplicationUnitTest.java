@@ -19,6 +19,22 @@ public class MensaApplicationUnitTest {
     public void initMensaApp(){
         mensaApplication = new MensaApplication();
     }
+
+    @Test
+    public void onCreate(){
+        mensaApplication.onCreate();
+        final Database expectedDatabase = mensaApplication.getDatabase();
+        assertNotNull(expectedDatabase);
+    }
+    @Test
+    public void onCreate1(){
+        final Database expectedDatabase = new Database();
+        mensaApplication.setDatabase(expectedDatabase);
+        mensaApplication.onCreate();
+
+        final Database actualDatabase = mensaApplication.getDatabase();
+        assertEquals(expectedDatabase, actualDatabase);
+    }
     @Test
     public void initProcess(){
         ProcessManager processManagerMock = mock(ProcessManager.class);

@@ -9,13 +9,13 @@ import de.haw.mensahaw.view.CheckoutActivity;
 
 public class Checkout_ViewModel extends ViewModel  {
     private ProcessManager processManager;
+    public ProcessManager getProcessManager() {return processManager;}
+    public void setProcessManager(@NonNull ProcessManager processManager) {this.processManager = processManager;}
+
+    public CheckoutActivity getCheckoutActivity() {return checkoutActivity;}
     private CheckoutActivity checkoutActivity;
-    public void setCheckoutActivity(CheckoutActivity checkoutActivity) {
-        this.checkoutActivity = checkoutActivity;
-    }
-    public void setProcessManager(@NonNull ProcessManager processManager) {
-        this.processManager = processManager;
-    }
+    public void setCheckoutActivity(CheckoutActivity checkoutActivity) {this.checkoutActivity = checkoutActivity;}
+
 
     public void initMQTT(){
         processManager.setCheckoutViewModel(this);
@@ -27,14 +27,9 @@ public class Checkout_ViewModel extends ViewModel  {
     public void openPlatePromptView(){
         checkoutActivity.openStartView();
     }
-    public void showCheckout(){
-        checkoutActivity.runOnUiThread(() -> checkoutActivity.quitLoadingScreen());
-    }
+    public void showCheckout(){checkoutActivity.runOnUiThread(() -> checkoutActivity.quitLoadingScreen());}
 
-    public void setPriceInView(float price) {
-        this.dishPrice.postValue(price);
-
-    }
+    public void setPriceInView(float price) {this.dishPrice.postValue(price);}
     public void setDishNameInView(String name) {
         this.dishName.postValue(name);
     }

@@ -9,14 +9,11 @@ import com.hivemq.client.mqtt.mqtt3.message.unsubscribe.Mqtt3Unsubscribe;
 import java.util.function.Consumer;
 
 public class MqttClient {
-
-    public void setClient(Mqtt3AsyncClient client) {
-        this.client = client;
-    }
-
     private Mqtt3AsyncClient client;
+    public void setClient(Mqtt3AsyncClient client) {this.client = client;}
+    public Mqtt3AsyncClient getClient() {return client;}
 
-    public void connectToBroker( String identifier, String host, int port, String username,  String password) {
+    public void connectToBroker(String identifier, String host, int port, String username,  String password) {
         if(client == null) client = com.hivemq.client.mqtt.MqttClient.builder().useMqttVersion3().identifier(identifier).serverHost(host)
                                                   .serverPort(port).buildAsync();
 
@@ -98,13 +95,11 @@ public class MqttClient {
             throw new RuntimeException(e);
         }
     }
-
-    public void setMqttConnectionCallback(MQTTConnectionCallback mqttConnectionCallback) {
-        this.mqttConnectionCallback = mqttConnectionCallback;
-    }
+    private MQTTConnectionCallback mqttConnectionCallback;
+    public void setMqttConnectionCallback(MQTTConnectionCallback mqttConnectionCallback) {this.mqttConnectionCallback = mqttConnectionCallback;}
+    public MQTTConnectionCallback getMqttConnectionCallback() {return mqttConnectionCallback;}
     public void removeMqttConnectionCallback() {
         this.mqttConnectionCallback = null;
     }
-    private MQTTConnectionCallback mqttConnectionCallback;
 
 }

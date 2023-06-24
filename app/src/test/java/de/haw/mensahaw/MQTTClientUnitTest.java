@@ -20,6 +20,7 @@ import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
 import org.junit.*;
 public class MQTTClientUnitTest {
 
+    //TODO: connect, sub, pub, unsub, disco
     private MqttClient mqttClient;
     @Before
     public void init(){
@@ -43,5 +44,34 @@ public class MQTTClientUnitTest {
         mqttClient.connectToBroker(identifier,host,port,username,password);
         verify(mqtt3AsyncClientMock).connectWith().simpleAuth().username(username).password(password.getBytes()).applySimpleAuth().send()
                 .whenComplete(any());*/
+    }
+    @Test
+    public void setClient(){
+
+        Mqtt3AsyncClient predictedMockedMQTT3AsyncClient = mock(Mqtt3AsyncClient.class);
+        mqttClient.setClient(predictedMockedMQTT3AsyncClient);
+        Mqtt3AsyncClient actualMQTT3AsyncClient = mqttClient.getClient();
+
+        assertEquals(predictedMockedMQTT3AsyncClient, actualMQTT3AsyncClient);
+    }
+    @Test
+    public void setMQTTConnectionCallback(){
+        MQTTConnectionCallback expectedMockedMQTTConnectionCallback = mock(MQTTConnectionCallback.class);
+
+        mqttClient.setMqttConnectionCallback(expectedMockedMQTTConnectionCallback);
+        MQTTConnectionCallback actualMQTTConnectionCallback = mqttClient.getMqttConnectionCallback();
+
+        assertEquals(expectedMockedMQTTConnectionCallback, actualMQTTConnectionCallback);
+    }
+    @Test
+    public void setMQTTConnectionCallback1(){
+        MQTTConnectionCallback expectedMockedMQTTConnectionCallback = mock(MQTTConnectionCallback.class);
+
+        mqttClient.setMqttConnectionCallback(expectedMockedMQTTConnectionCallback);
+        mqttClient.removeMqttConnectionCallback();
+
+        MQTTConnectionCallback actualMQTTConnectionCallback = mqttClient.getMqttConnectionCallback();
+
+        assertNull(actualMQTTConnectionCallback);
     }
 }
