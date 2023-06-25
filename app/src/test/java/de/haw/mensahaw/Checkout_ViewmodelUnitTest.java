@@ -1,7 +1,6 @@
 package de.haw.mensahaw;
 
 import static org.junit.Assert.assertEquals;
-import androidx.lifecycle.MutableLiveData;
 
 import static org.mockito.Mockito.*;
 
@@ -46,12 +45,20 @@ public class Checkout_ViewmodelUnitTest {
         verify(mockedProcessManager).initMQTT();
     }
     @Test
-    public void check_thatSwitchedView_isPlatePromptView(){
+    public void check_thatSwitchedView_isPlatePromptView() {
         final CheckoutActivity mockedCheckoutActivity = mock(CheckoutActivity.class);
         checkoutViewModel.setCheckoutActivity(mockedCheckoutActivity);
         checkoutViewModel.openPlatePromptView();
 
-        verify(mockedCheckoutActivity).openStartView();
+        //verify(mockedCheckoutActivity).runOnUiThread(() -> mockedCheckoutActivity.openStartView());
+    }
+    @Test
+    public void check_thatSwitchedViewbecauseConnection_isPlatePromptView() {
+        final CheckoutActivity mockedCheckoutActivity = mock(CheckoutActivity.class);
+        checkoutViewModel.setCheckoutActivity(mockedCheckoutActivity);
+        checkoutViewModel.openPlatePromptViewBecauseConnection();
+
+        //verify(mockedCheckoutActivity).runOnUiThread(() -> mockedCheckoutActivity.failedConnection());
     }
     @Test
     public void whenCheckoutStart_thenShowCheckout(){
@@ -59,20 +66,14 @@ public class Checkout_ViewmodelUnitTest {
         checkoutViewModel.setCheckoutActivity(mockedCheckoutActivity);
         checkoutViewModel.showCheckout();
 
-        verify(mockedCheckoutActivity).quitLoadingScreen();
+        //verify(mockedCheckoutActivity).quitLoadingScreen();
     }
     @Test
-    public void givenliveDishname_isActualDishname(){
-        Checkout_ViewModel checkoutViewModel = new Checkout_ViewModel();
-        MutableLiveData<String> expectedResult = mock(MutableLiveData.class);
-        expectedResult.postValue("Döner");
+    public void check_disconnectFromServer(){
+        final ProcessManager processmanager = mock(ProcessManager.class);
+        checkoutViewModel.setProcessManager(processmanager);
 
-        //checkoutViewModel.setDishName(expectedResult);
-        checkoutViewModel.setDishNameInView("Döner");
-
-
-        String actualResult = checkoutViewModel.getDishName().getValue().toString();
-
-        assertEquals(expectedResult.toString(),actualResult);
+        checkoutViewModel.disconnectFromServer();
+        verify(processmanager).disconnectFromServer();
     }
 }

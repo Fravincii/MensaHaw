@@ -13,7 +13,6 @@ public class ProcessManager {
     public void setMqttManager(MQTTManager mqttManager) {
         this.mqttManager = mqttManager;
     }
-
     private MQTTManager mqttManager;
     private Database database;
 
@@ -21,7 +20,6 @@ public class ProcessManager {
         this.database = database;
     }
 
-    //Gets called when User presses Button
     public void initMQTT(){
         if(mqttManager == null) mqttManager = new MQTTManager();
         mqttManager.setDatabase(database);
@@ -62,6 +60,7 @@ public class ProcessManager {
     public void handleWeight(float weight){
         receivedWeight = true;
         final Dish weightedDish = weightedDish(weight);
+
         mqttManager.publishPrice(weightedDish.getPrice());
         mqttManager.removeScaleCallback();
         mqttManager.unsubscribeFromWeight();

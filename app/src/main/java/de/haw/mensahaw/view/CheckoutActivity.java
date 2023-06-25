@@ -37,7 +37,7 @@ public class CheckoutActivity extends AppCompatActivity {
         checkoutViewModel.setProcessManager(mensaApplication.getProcessManager());
         checkoutViewModel.setCheckoutActivity(this);
         checkoutViewModel.initMQTT();
-    };
+    }
     private void startPriceObserver(){
         TextView priceView = findViewById(R.id.price);
         priceView.setText(String.valueOf(checkoutViewModel.getPrice()));

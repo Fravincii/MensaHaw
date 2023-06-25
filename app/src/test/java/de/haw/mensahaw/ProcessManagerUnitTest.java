@@ -22,7 +22,7 @@ import org.mockito.Mock;
 
 public class ProcessManagerUnitTest {
 
-    ProcessManager processManager;
+    private ProcessManager processManager;
     @Before
     public void init(){
         processManager = new ProcessManager();
@@ -39,7 +39,7 @@ public class ProcessManagerUnitTest {
     }
     @Test
     public void getSetMQTTManager(){
-        MQTTManager expectedMQTTManager = new MQTTManager();
+        final MQTTManager expectedMQTTManager = new MQTTManager();
 
         processManager.setMqttManager(expectedMQTTManager);
         MQTTManager actualMQTTManager = processManager.getMqttManager();
@@ -48,9 +48,9 @@ public class ProcessManagerUnitTest {
     }
     @Test
     public void initMQTT() {
-        MQTTManager mqttManagerMock = mock(MQTTManager.class);
-        Database databaseMock = mock(Database.class);
-        CountDownTimer countDownTimerMock = mock(CountDownTimer.class);
+        final MQTTManager mqttManagerMock = mock(MQTTManager.class);
+        final Database databaseMock = mock(Database.class);
+        final CountDownTimer countDownTimerMock = mock(CountDownTimer.class);
 
         processManager.setCountDownTimer(countDownTimerMock);
         processManager.setMqttManager(mqttManagerMock);
@@ -101,7 +101,7 @@ public class ProcessManagerUnitTest {
         final float weight = 2.5f;
         final MQTTManager mockedMQTTMAnager = mock(MQTTManager.class);
         final Database database = mock(Database.class);
-        final Dish dish = new Dish(database.todaysWeightedDishName, weight * database.PRICE_PERKG_WEIGHTED_PLATE);
+        final Dish dish = new Dish(database.todaysWeightedDishName, Math.round(weight * database.PRICE_PERKG_WEIGHTED_PLATE * 100) /100);
 
         processManager.setCheckoutViewModel(mock(Checkout_ViewModel.class));
         processManager.setMqttManager(mockedMQTTMAnager);
@@ -114,11 +114,25 @@ public class ProcessManagerUnitTest {
         verify(mockedMQTTMAnager).unsubscribeFromWeight();
     }
     @Test
+    public void scaleEmulation() {
+        final boolean receive = false;
+
+        final MQTTManager mqttManagerMock = mock(MQTTManager.class);
+
+        processManager.setMqttManager(mqttManagerMock);
+        processManager.setReceivedWeight(receive);
+
+        processManager.scaleEmulation();
+
+        verify(mqttManagerMock).publishWeight(2.75f);
+    }
+    @Test
     public void handleTimeOut() {
         final boolean receive = false;
 
         final Checkout_ViewModel checkoutViewModel = mock(Checkout_ViewModel.class);
         final MQTTManager mqttManagerMock = mock(MQTTManager.class);
+
         processManager.setMqttManager(mqttManagerMock);
         processManager.setCheckoutViewModel(checkoutViewModel);
         processManager.setReceivedWeight(receive);
@@ -129,12 +143,12 @@ public class ProcessManagerUnitTest {
         verify(mqttManagerMock).removeMqttConnectionCallback();
         verify(mqttManagerMock).unsubscribeFromQRCode();
         verify(mqttManagerMock).unsubscribeFromWeight();
-        verify(checkoutViewModel).openPlatePromptView();
+        verify(checkoutViewModel).openPlatePromptViewBecauseConnection();
     }
 
     @Test
     public void waitforQR2() {
-        MQTTManager mqttManagerMock = mock(MQTTManager.class);
+        final MQTTManager mqttManagerMock = mock(MQTTManager.class);
         processManager.setMqttManager(mqttManagerMock);
 
         processManager.waitForQRCode();
@@ -143,7 +157,7 @@ public class ProcessManagerUnitTest {
 
     @Test
     public void waitforWeight() {
-        MQTTManager mqttManagerMock = mock(MQTTManager.class);
+        final MQTTManager mqttManagerMock = mock(MQTTManager.class);
         processManager.setMqttManager(mqttManagerMock);
         processManager.waitForWeight();
         verify(mqttManagerMock).subscribeToWeight();
@@ -152,7 +166,7 @@ public class ProcessManagerUnitTest {
     }
     @Test
     public void setCheckoutViewModel() {
-        Checkout_ViewModel checkoutViewModel = new Checkout_ViewModel();
+        final Checkout_ViewModel checkoutViewModel = new Checkout_ViewModel();
 
         processManager.setCheckoutViewModel(checkoutViewModel);
 
@@ -208,6 +222,15 @@ public class ProcessManagerUnitTest {
         verify(checkoutViewModelMock).showCheckout();
         verify(checkoutViewModelMock).setPriceInView(dishPrice);
         verify(checkoutViewModelMock).setDishNameInView(dishName);
+    }
+    @Test
+    public void check_disconnectFromServer() {
+        final MQTTManager mqttManagerMocked = mock(MQTTManager.class);
+        processManager.setMqttManager(mqttManagerMocked);
+
+        processManager.disconnectFromServer();
+
+        verify(mqttManagerMocked).disconnectFromServer();
     }
 }
 

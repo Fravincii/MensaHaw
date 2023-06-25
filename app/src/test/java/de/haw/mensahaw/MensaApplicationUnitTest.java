@@ -11,23 +11,13 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 public class MensaApplicationUnitTest {
-
-    MensaApplication mensaApplication;
+    private MensaApplication mensaApplication;
     @Before
     public void initMensaApp(){
         mensaApplication = new MensaApplication();
     }
 
-    @Test
-    public void test_startingOnCreate(){
-        mensaApplication = mock(mensaApplication.getClass());
 
-        mensaApplication.setDatabase(null);
-        mensaApplication.onCreate();
-        final Database expectedDatabase = mensaApplication.getDatabase();
-
-        assertNotNull(expectedDatabase);
-    }
     @Test
     public void startOncreate_equalsLaterOncreate(){
         final Database expectedDatabase = new Database();
@@ -39,8 +29,8 @@ public class MensaApplicationUnitTest {
     }
     @Test
     public void process_initialised(){
-        ProcessManager processManagerMock = mock(ProcessManager.class);
-        Database databaseMock = mock(Database.class);
+        final ProcessManager processManagerMock = mock(ProcessManager.class);
+        final Database databaseMock = mock(Database.class);
 
         mensaApplication.setDatabase(databaseMock);
 
@@ -51,7 +41,7 @@ public class MensaApplicationUnitTest {
     }
     @Test
     public void whenProcessManagerCreate_thenProcessManagerCreated(){
-        ProcessManager processManager = new ProcessManager();
+        final ProcessManager processManager = new ProcessManager();
 
         mensaApplication.setProcessManager(processManager);
 
@@ -60,7 +50,7 @@ public class MensaApplicationUnitTest {
     }
     @Test
     public void whenDatabaseCreate_thenDatabaseCreated(){
-        Database database = new Database();
+        final Database database = new Database();
 
         mensaApplication.setDatabase(database);
 

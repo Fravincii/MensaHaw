@@ -1,7 +1,5 @@
 package de.haw.mensahaw.model;
 
-import androidx.annotation.NonNull;
-
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
 import com.hivemq.client.mqtt.mqtt3.message.publish.Mqtt3Publish;
 import com.hivemq.client.mqtt.mqtt3.message.unsubscribe.Mqtt3Unsubscribe;

@@ -117,7 +117,7 @@ public class MQTTManager {
     private ScaleCallBack scaleCallBack;
     public ScaleCallBack getScaleCallBack() {return scaleCallBack;}
     public void setScaleCallback(ScaleCallBack callback){this.scaleCallBack = callback;}
-    public void removeScaleCallback(){this.scaleCallBack = null;};
+    public void removeScaleCallback(){this.scaleCallBack = null;}
 
     private QRCallback qrCallback;
     public QRCallback getQrCallback() {return qrCallback;}

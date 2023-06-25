@@ -1,8 +1,8 @@
 package de.haw.mensahaw.model;
 
 public class Dish {
-    private String name;
-    private float price;
+    private final String name;
+    private final float price;
 
     public Dish(String name, float price) {
         this.name = name;

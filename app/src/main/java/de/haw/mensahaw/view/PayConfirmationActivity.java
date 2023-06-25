@@ -10,12 +10,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import de.haw.mensahaw.R;
 import de.haw.mensahaw.model.MensaApplication;
-import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
 import de.haw.mensahaw.viewmodel.PayConfirmation_ViewModel;
 
 public class PayConfirmationActivity extends AppCompatActivity {
 
-    private PayConfirmation_ViewModel payConfirmation_viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +36,11 @@ public class PayConfirmationActivity extends AppCompatActivity {
         startActivity(changeView);
     }
     private void backToStart(){
-        payConfirmation_viewModel = new ViewModelProvider(this).get(PayConfirmation_ViewModel.class);
+        PayConfirmation_ViewModel payConfirmation_viewModel = new ViewModelProvider(this).get(PayConfirmation_ViewModel.class);
         MensaApplication mensaApplication = (MensaApplication) getApplication();
 
         payConfirmation_viewModel.setProcessManager(mensaApplication.getProcessManager());
         payConfirmation_viewModel.disconnectFromServer();
         openStartView();
-    };
+    }
 }

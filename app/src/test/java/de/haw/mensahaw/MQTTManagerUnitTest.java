@@ -39,7 +39,6 @@ public class MQTTManagerUnitTest {
     }
     @Test
     public void MQTTManager_activationTest(){
-
         assertNotNull(mqttManager.getMqttClient());
     }
     @Test
@@ -100,29 +99,7 @@ public class MQTTManagerUnitTest {
         verify(mqttClientMock).setMqttConnectionCallback(any());
 
     }
-    /*@Test   //TODO non functional
-    public void connectToServer4(){
-        final String hostname = "10.0.2.2";
-        final int portnumber = 1883;
-        final String passwort = "my-password";
-        final boolean connectToOnlineServer = true;
-        final MQTTConnectionCallback mockedMQTTConnectionCallback = mock(MQTTConnectionCallback.class);
-        final MQTTConnectionCallback callback = mock(MQTTConnectionCallback.class);
 
-        mqttManager.setMQTTConnectionCallback(mockedMQTTConnectionCallback);
-        mqttManager.setConnectToOnlineServer(connectToOnlineServer);
-        mqttManager.setMqttClient(mqttClientMock);
-        mqttClientMock.setMqttConnectionCallback(callback);
-
-        mqttManager.connectToServer();
-
-
-        callback.onConnectionSuccess();
-        //mockedMQTTConnectionCallback.onConnectionSuccess();
-
-        verify(mockedMQTTConnectionCallback).onConnectionSuccess();
-        verify(mqttClientMock).removeMqttConnectionCallback();
-    }*/
     @Test
     public void subscribeToWeight(){
 
@@ -266,7 +243,7 @@ public class MQTTManagerUnitTest {
 
         final MQTTConnectionCallback actualMQTTConnectionCallback = mqttManager.getMqttConnectionCallback();
 
-        assertNull( actualMQTTConnectionCallback);
+        assertNull(actualMQTTConnectionCallback);
     }
     @Test
     public void setQRCallback(){
@@ -305,9 +282,6 @@ public class MQTTManagerUnitTest {
     }
     @Test
     public void removeScaleCallback(){
-        //final ScaleCallBack expectedMockedScaleCallback = mock(ScaleCallBack.class);
-
-        //mqttManager.setScaleCallback(expectedMockedScaleCallback);
         mqttManager.removeScaleCallback();
         final ScaleCallBack actualScaleCallback = mqttManager.getScaleCallBack();
 
