@@ -22,9 +22,13 @@ public class Checkout_ViewModel extends ViewModel  {
 
     private MutableLiveData<String> dishName = new MutableLiveData<>();
 
-    public void openPlatePromptView(){checkoutActivity.openStartView();}
+    public void openPlatePromptView(){checkoutActivity.runOnUiThread(() -> checkoutActivity.openStartView());}
+    public void openPlatePromptViewBecauseConnection(){checkoutActivity.runOnUiThread(() -> checkoutActivity.failedConnection());}
     public void showCheckout(){checkoutActivity.runOnUiThread(() -> checkoutActivity.quitLoadingScreen());}
 
+    public void disconnectFromServer(){
+        processManager.disconnectFromServer();
+    }
     public void setPriceInView(float price) {this.dishPrice.postValue(price);}
     public void setDishNameInView(String name) {
         this.dishName.postValue(name);

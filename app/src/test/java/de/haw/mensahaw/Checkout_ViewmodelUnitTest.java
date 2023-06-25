@@ -67,7 +67,7 @@ public class Checkout_ViewmodelUnitTest {
         MutableLiveData<String> expectedResult = mock(MutableLiveData.class);
         expectedResult.postValue("Döner");
 
-        checkoutViewModel.setDishName(expectedResult);
+        //checkoutViewModel.setDishName(expectedResult);
         checkoutViewModel.setDishNameInView("Döner");
 
 

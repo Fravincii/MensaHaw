@@ -63,6 +63,7 @@ public class CheckoutActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancelbutton);
         cancelButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
+                checkoutViewModel.disconnectFromServer();
                 openStartView();
             }
         });
@@ -72,6 +73,7 @@ public class CheckoutActivity extends AppCompatActivity {
         payButton =  findViewById(R.id.paybutton);
         payButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
+                checkoutViewModel.disconnectFromServer();
                 openPayConfirmationView();
             }
         });
@@ -80,8 +82,11 @@ public class CheckoutActivity extends AppCompatActivity {
         Intent changeView = new Intent(this, PayConfirmationActivity.class);
         startActivity(changeView);
     }
-    public void openStartView() {
+    public void failedConnection(){
         Toast.makeText(this, R.string.cannot_connect, Toast.LENGTH_LONG).show();
+        openStartView();
+    }
+    public void openStartView() {
         Intent changeView = new Intent(this, StartActivity.class);
         startActivity(changeView);
     }

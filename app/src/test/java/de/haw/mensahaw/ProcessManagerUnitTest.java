@@ -175,7 +175,7 @@ public class ProcessManagerUnitTest {
         processManager.setDatabase(database);
 
         final float weight = 3.75f;
-        final float expectedEndPrice = weight * database.PRICE_PERKG_WEIGHTED_PLATE;
+        final float expectedEndPrice = Math.round(weight * database.PRICE_PERKG_WEIGHTED_PLATE * 100) /100;
         final Dish weightedDish = processManager.weightedDish(weight);
         final float actualEndPrice = weightedDish.getPrice();
 

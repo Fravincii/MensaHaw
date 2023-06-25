@@ -2,10 +2,6 @@ package de.haw.mensahaw.model;
 
 import android.os.CountDownTimer;
 
-import androidx.annotation.NonNull;
-
-import org.jetbrains.annotations.Contract;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,8 +34,9 @@ public class ProcessManager {
         mqttManager.removeMqttConnectionCallback();
     }
     public void waitForQRCode(){
-        mqttManager.subscribeToQRCode();
         mqttManager.setQRCallback(qrCode -> processQRCode(qrCode));
+        mqttManager.subscribeToQRCode();
+
     }
     public void processQRCode(String qrCode){
         final List<String> qrNormalPlatesList = Arrays.asList(database.QRCode_NORMAL_PLATES);
@@ -57,8 +54,9 @@ public class ProcessManager {
     }
 
     public void waitForWeight(){
-        mqttManager.subscribeToWeight();
         mqttManager.setScaleCallback(weight -> handleWeight(weight));
+        mqttManager.subscribeToWeight();
+
     }
 
     public void handleWeight(float weight){
@@ -71,7 +69,7 @@ public class ProcessManager {
     }
 
     public Dish weightedDish(float weight){
-        final float endPrice = weight * database.PRICE_PERKG_WEIGHTED_PLATE;
+        final float endPrice = Math.round(weight * database.PRICE_PERKG_WEIGHTED_PLATE * 100) /100;
         return new Dish(database.todaysWeightedDishName, endPrice);
     }
     public boolean isReceivedWeight() {return receivedWeight;}
@@ -85,13 +83,15 @@ public class ProcessManager {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.info("timeLeft:" + millisUntilFinished);
-                //if(millisUntilFinished < 40000) mqttManager.publishQRCode("1");
-                if(millisUntilFinished < 30000) mqttManager.publishWeight(2.75f);
+                scaleEmulation();
             }
             @Override
             public void onFinish()  {handleTimeOut();}
 
         }.start();
+    }
+    public void scaleEmulation(){
+        if(!receivedWeight) mqttManager.publishWeight(2.75f);
     }
     public void handleTimeOut(){
         if(!receivedWeight){
@@ -100,7 +100,7 @@ public class ProcessManager {
             mqttManager.removeScaleCallback();
             mqttManager.unsubscribeFromQRCode();
             mqttManager.unsubscribeFromWeight();
-            if(checkoutViewModel != null) checkoutViewModel.openPlatePromptView();
+            if(checkoutViewModel != null) checkoutViewModel.openPlatePromptViewBecauseConnection();
         }
     }
     private Checkout_ViewModel checkoutViewModel;
@@ -111,5 +111,8 @@ public class ProcessManager {
         checkoutViewModel.showCheckout();
         checkoutViewModel.setPriceInView(dishToPay.getPrice());
         checkoutViewModel.setDishNameInView(dishToPay.getName());
+    }
+    public void disconnectFromServer(){
+        mqttManager.disconnectFromServer();
     }
 }

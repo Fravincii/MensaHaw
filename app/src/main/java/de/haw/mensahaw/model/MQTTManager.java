@@ -30,7 +30,9 @@ public class MQTTManager {
     public void setConnectToOnlineServer(boolean connectToOnlineServer) {this.connectToOnlineServer = connectToOnlineServer;}
 
     public void connectToServer(){
-        if(mqttClient == null) return;
+        if(mqttClient == null) setMqttClient(new MqttClient());
+        if(mqttClient.getClient() != null && mqttClient.getClient().getState().isConnectedOrReconnect()) return;
+
         final String randomId = UUID.randomUUID().toString();
         if(connectToOnlineServer)
             mqttClient.connectToBroker(randomId,
@@ -53,6 +55,16 @@ public class MQTTManager {
 
     //region Un-/Subscribe MQTT
     private String mqttpublishToString(Mqtt3Publish message){return new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);}
+    public void subscribeToQRCode(){
+        ensureMQTTInitialized();
+        mqttClient.subscribe(database.QRSCANNER_QRCODE, message -> handleQRCodeMessage(mqttpublishToString(message)));
+    }
+    public void handleQRCodeMessage(String message){
+        if(qrCallback == null) return;
+        qrCallback.onQRCallback(message);
+        //Log.info(String.format("MESSAGE: QR Code is %s", convertedMessageContent));
+    }
+
     public void subscribeToWeight(){
         ensureMQTTInitialized();
         mqttClient.subscribe(database.SCALE_WEIGHT, message -> handleWeightMessage(mqttpublishToString(message)));
@@ -62,14 +74,6 @@ public class MQTTManager {
         final float value = Float.parseFloat(message);
         scaleCallBack.onWeightCallback(value);
         //Log.info(String.format("MESSAGE: The Scale weight: %skg", convertedMessageContent));
-    }
-    public void subscribeToQRCode(){
-        ensureMQTTInitialized();
-        mqttClient.subscribe(database.QRSCANNER_QRCODE, message -> handleQRCodeMessage(mqttpublishToString(message)));
-    }
-    public void handleQRCodeMessage(String message){
-        qrCallback.onQRCallback(message);
-        //Log.info(String.format("MESSAGE: QR Code is %s", convertedMessageContent));
     }
 
     public void unsubscribeFromWeight(){
