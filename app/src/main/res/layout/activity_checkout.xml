@@ -25,7 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="numberDecimal"
         android:singleLine="false"
         android:text="@string/_22_3"
         android:textAlignment="center"

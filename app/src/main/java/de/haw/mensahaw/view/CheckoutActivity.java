@@ -44,7 +44,7 @@ public class CheckoutActivity extends AppCompatActivity {
         checkoutViewModel.getPrice().observe(this, new Observer<Float>() {
             @Override
             public void onChanged(Float updatedPrice) {
-                priceView.setText(String.valueOf(updatedPrice));
+                priceView.setText(updatedPrice + "€");
             }
         });
     }
