@@ -25,16 +25,16 @@
             android:name=".view.CheckoutActivity"
             android:exported="false" />
         <activity
-            android:name=".view.WeightingInputActivity"
+            android:name=".view.PlatePromptActivity"
             android:exported="false" />
         <activity
-            android:name=".view.CheckoutConfirmationActivity"
+            android:name=".view.PayConfirmationActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ScanActivity"
+            android:name=".view.ScannerActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ProcessDescriptionActivity"
+            android:name=".view.StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -22,5 +22,5 @@
     <string name="permission_granted">Erlaubnis erteilt!</string>
     <string name="permission_denied">Erlaubnis verweigert!</string>
     <string name="cannot_connect">Es konnte keine Verbindung zum Internet hergstellt werden, bitte überprüfe deine Internetverbindung!</string>
-    <string name="ihr_gewicht_wird_gewogen">Ihr Gewicht wird gewogen!</string>
+    <string name="ihr_gewicht_wird_gewogen">Daten werden verarbeitet!</string>
 </resources>
