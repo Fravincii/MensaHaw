@@ -12,6 +12,10 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.Assert.assertEquals;
 
+import android.util.Log;
+
+import com.hivemq.client.mqtt.mqtt3.message.publish.Mqtt3Publish;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -141,6 +145,31 @@ public class MQTTManagerUnitTest {
 
         mqttManager.subscribeToQRCode();
         verify(mqttClientMock).subscribe(eq(topic), any());
+
+    }
+    @Test
+    public void handleWeightTest(){
+        final String message = "123";
+        final float expectedFloat = Float.parseFloat(message);
+        final ScaleCallBack mockedScaleCallback = mock(ScaleCallBack.class);
+        mqttManager.setDatabase(databaseMock);
+        mqttManager.setScaleCallback(mockedScaleCallback);
+
+        mqttManager.handleWeightMessage(message);
+
+        verify(mockedScaleCallback).onWeightCallback(expectedFloat);
+
+    }
+    @Test
+    public void handleQRCodeTest(){
+        final String message = "1";
+        final QRCallback mockedScaleCallback = mock(QRCallback.class);
+        mqttManager.setDatabase(databaseMock);
+        mqttManager.setQRCallback(mockedScaleCallback);
+
+        mqttManager.handleQRCodeMessage(message);
+
+        verify(mockedScaleCallback).onQRCallback(message);
 
     }
     @Test

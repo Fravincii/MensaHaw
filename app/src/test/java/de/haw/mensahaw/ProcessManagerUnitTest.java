@@ -7,7 +7,9 @@ import de.haw.mensahaw.model.Database;
 import de.haw.mensahaw.model.Dish;
 import de.haw.mensahaw.model.MQTTConnectionCallback;
 import de.haw.mensahaw.model.MQTTManager;
+import de.haw.mensahaw.model.MqttClient;
 import de.haw.mensahaw.model.ProcessManager;
+import de.haw.mensahaw.model.QRCallback;
 import de.haw.mensahaw.viewmodel.Checkout_ViewModel;
 
 import static org.junit.Assert.*;
@@ -15,6 +17,7 @@ import static org.junit.Assert.*;
 import android.os.CountDownTimer;
 
 import org.junit.*;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
 public class ProcessManagerUnitTest {
@@ -23,6 +26,16 @@ public class ProcessManagerUnitTest {
     @Before
     public void init(){
         processManager = new ProcessManager();
+    }
+
+    @Test
+    public void getSetCheckoutViewModel(){
+        final Checkout_ViewModel expectedViewmodelmock = mock(Checkout_ViewModel.class);
+        processManager.setCheckoutViewModel(expectedViewmodelmock);
+
+        final Checkout_ViewModel actualViemodel = processManager.getCheckoutViewModel();
+        assertEquals(expectedViewmodelmock,actualViemodel);
+
     }
     @Test
     public void getSetMQTTManager(){
@@ -49,42 +62,76 @@ public class ProcessManagerUnitTest {
         verify(mqttManagerMock).connectToServer();
         verify(mqttManagerMock).setMQTTConnectionCallback(any(MQTTConnectionCallback.class));
     }
+
     @Test
-    public void waitforQR() {
-        /*
-        MQTTManager mqttManagerMock = mock(MQTTManager.class);
-        Database databaseMock = mock(Database.class);
-        String qrCode = "1";
-        final Dish rightDish = databaseMock.firstDish;
+    public void processQRCode0() {
+        final String qrCode = "0";
+        final MQTTManager mockedMQTTMAnager = mock(MQTTManager.class);
+        processManager.setMqttManager(mockedMQTTMAnager);
+        processManager.setDatabase(new Database());
+        processManager.processQRCode(qrCode);
 
-        mqttManagerMock.connectToServer();
-        processManager.setMqttManager(mqttManagerMock);
-
-        processManager.waitForQRCode();
-
-        verify(mqttManagerMock).subscribeToQRCode();
-
-        verify(mqttManagerMock).setQRCallback(qrcode ->{
-            verify(processManager).startPaying(rightDish);
-        });
-        mqttManagerMock.publishQRCode(qrCode);
-
-         */
+        verify(mockedMQTTMAnager).subscribeToWeight();
     }
     @Test
-    public void waitforQR1() {
+    public void processQRCode1() {
+        final String qrCode = "1";
+        final MQTTManager mockedMQTTMAnager = mock(MQTTManager.class);
+        final Checkout_ViewModel checkoutViewModel = mock(Checkout_ViewModel.class);
 
-        MQTTManager mqttManagerMock = mock(MQTTManager.class);
+        processManager.setMqttManager(mockedMQTTMAnager);
+        processManager.setDatabase(new Database());
+        processManager.setCheckoutViewModel(checkoutViewModel);
+        processManager.processQRCode(qrCode);
 
-        processManager.setMqttManager(mqttManagerMock);
-        processManager.waitForQRCode();
-
-        verify(mqttManagerMock).subscribeToQRCode();
-        verify(mqttManagerMock).setQRCallback(any());
-
-        mqttManagerMock.getMqttConnectionCallback().onConnectionSuccess();
-        
+        verify(checkoutViewModel).showCheckout();
     }
+    @Test
+    public void handleMQTTConnectionCallback() {
+        final MQTTManager mockedMQTTMAnager = mock(MQTTManager.class);
+
+        processManager.setMqttManager(mockedMQTTMAnager);
+
+        processManager.handleMQTTConnectionCallback();
+        verify(mockedMQTTMAnager).removeMqttConnectionCallback();
+
+    }
+    @Test
+    public void handleWeight() {
+        final float weight = 2.5f;
+        final MQTTManager mockedMQTTMAnager = mock(MQTTManager.class);
+        final Database database = mock(Database.class);
+        final Dish dish = new Dish(database.todaysWeightedDishName, weight * database.PRICE_PERKG_WEIGHTED_PLATE);
+
+        processManager.setCheckoutViewModel(mock(Checkout_ViewModel.class));
+        processManager.setMqttManager(mockedMQTTMAnager);
+        processManager.setDatabase(database);
+
+        processManager.handleWeight(weight);
+
+        verify(mockedMQTTMAnager).publishPrice(dish.getPrice());
+        verify(mockedMQTTMAnager).removeScaleCallback();
+        verify(mockedMQTTMAnager).unsubscribeFromWeight();
+    }
+    @Test
+    public void handleTimeOut() {
+        final boolean receive = false;
+
+        final Checkout_ViewModel checkoutViewModel = mock(Checkout_ViewModel.class);
+        final MQTTManager mqttManagerMock = mock(MQTTManager.class);
+        processManager.setMqttManager(mqttManagerMock);
+        processManager.setCheckoutViewModel(checkoutViewModel);
+        processManager.setReceivedWeight(receive);
+
+        processManager.handleTimeOut();
+        verify(mqttManagerMock).removeScaleCallback();
+        verify(mqttManagerMock).removeQRCallback();
+        verify(mqttManagerMock).removeMqttConnectionCallback();
+        verify(mqttManagerMock).unsubscribeFromQRCode();
+        verify(mqttManagerMock).unsubscribeFromWeight();
+        verify(checkoutViewModel).openPlatePromptView();
+    }
+
     @Test
     public void waitforQR2() {
         MQTTManager mqttManagerMock = mock(MQTTManager.class);
@@ -146,21 +193,7 @@ public class ProcessManagerUnitTest {
 
         assertEquals(expectedName, actualName);
     }
-    @Test
-    public void startCountdown() {
-        final MQTTManager mockedMQTTManager = mock(MQTTManager.class);
-        final CountDownTimer mockedCountdown = mock(CountDownTimer.class);
 
-        processManager.setMqttManager(mockedMQTTManager);
-
-        processManager.setCountDownTimer(mockedCountdown);
-        processManager.startCountdown();
-
-
-        processManager.setReceivedWeight(true);
-
-        verifyNoInteractions();
-    }
     @Test
     public void startPaying() {
         final String dishName = "testfood";

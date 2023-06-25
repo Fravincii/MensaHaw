@@ -56,7 +56,7 @@ public class Checkout_ViewmodelUnitTest {
     @Test
     public void whenCheckoutStart_thenShowCheckout(){
         final CheckoutActivity mockedCheckoutActivity = mock(CheckoutActivity.class);
-       checkoutViewModel.setCheckoutActivity(mockedCheckoutActivity);
+        checkoutViewModel.setCheckoutActivity(mockedCheckoutActivity);
         checkoutViewModel.showCheckout();
 
         verify(mockedCheckoutActivity).quitLoadingScreen();
