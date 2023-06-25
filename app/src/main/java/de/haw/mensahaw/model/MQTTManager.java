@@ -9,6 +9,7 @@ public class MQTTManager {
     public MQTTManager() {
         setMqttClient(new MqttClient());
     }
+
     private MqttClient mqttClient;
     public MqttClient getMqttClient() {
         return mqttClient;
@@ -61,7 +62,7 @@ public class MQTTManager {
             String convertedMessageContent = new String(message.getPayloadAsBytes(), StandardCharsets.UTF_8);
             float value = Float.parseFloat(convertedMessageContent);
             scaleCallBack.onWeightCallback(value);
-            Log.info(String.format("MESSAGE: The Scale weight: %skg", convertedMessageContent));
+            //Log.info(String.format("MESSAGE: The Scale weight: %skg", convertedMessageContent));
         });
     }
     public void subscribeToQRCode(){

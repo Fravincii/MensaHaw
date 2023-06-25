@@ -56,7 +56,7 @@ public class ProcessManager {
         });
     }
 
-    private void waitForWeight(){
+    public void waitForWeight(){
         mqttManager.subscribeToWeight();
 
         mqttManager.setScaleCallback(weight -> {

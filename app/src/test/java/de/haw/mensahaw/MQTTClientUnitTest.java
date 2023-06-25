@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import de.haw.mensahaw.model.Database;
 import de.haw.mensahaw.model.MQTTConnectionCallback;
+import de.haw.mensahaw.model.MQTTManager;
 import de.haw.mensahaw.model.MensaApplication;
 import de.haw.mensahaw.model.MqttClient;
 import de.haw.mensahaw.model.ProcessManager;
@@ -16,11 +17,21 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
+import com.hivemq.client.mqtt.mqtt3.message.publish.Mqtt3Publish;
+import com.hivemq.client.mqtt.mqtt3.message.subscribe.Mqtt3SubscribeBuilder;
+import com.hivemq.client.mqtt.mqtt3.message.subscribe.suback.Mqtt3SubAck;
 
 import org.junit.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.function.Consumer;
+
+@RunWith(MockitoJUnitRunner.class)
 public class MQTTClientUnitTest {
 
-    //TODO: connect, sub, pub, unsub, disco
+    //TODO: connect, sub, pub, unsub, disco???
     private MqttClient mqttClient;
     @Before
     public void init(){
@@ -45,6 +56,20 @@ public class MQTTClientUnitTest {
         verify(mqtt3AsyncClientMock).connectWith().simpleAuth().username(username).password(password.getBytes()).applySimpleAuth().send()
                 .whenComplete(any());*/
     }
+    @Test
+    public void subscribe(){
+        final Mqtt3AsyncClient mqtt3AsyncClientMock = mock(Mqtt3AsyncClient.class);
+
+        mqttClient.setClient(mqtt3AsyncClientMock);
+        final Database database = new Database();
+        final String topic = database.SCALE_WEIGHT;
+
+        mqttClient.subscribe(topic,message ->{
+
+        });
+        verify(mqtt3AsyncClientMock).subscribeWith().topicFilter(topic).callback(any()).send();
+    }
+
     @Test
     public void setClient(){
 

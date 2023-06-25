@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 import android.os.CountDownTimer;
 
 import org.junit.*;
+import org.mockito.Mock;
 
 public class ProcessManagerUnitTest {
 
@@ -74,17 +75,34 @@ public class ProcessManagerUnitTest {
     public void waitforQR1() {
 
         MQTTManager mqttManagerMock = mock(MQTTManager.class);
+
+        processManager.setMqttManager(mqttManagerMock);
         processManager.waitForQRCode();
+
         verify(mqttManagerMock).subscribeToQRCode();
         verify(mqttManagerMock).setQRCallback(any());
+
+        mqttManagerMock.getMqttConnectionCallback().onConnectionSuccess();
+        
     }
     @Test
     public void waitforQR2() {
         MQTTManager mqttManagerMock = mock(MQTTManager.class);
+        processManager.setMqttManager(mqttManagerMock);
+
         processManager.waitForQRCode();
         verify(mqttManagerMock).subscribeToQRCode();
     }
 
+    @Test
+    public void waitforWeight() {
+        MQTTManager mqttManagerMock = mock(MQTTManager.class);
+        processManager.setMqttManager(mqttManagerMock);
+        processManager.waitForWeight();
+        verify(mqttManagerMock).subscribeToWeight();
+
+
+    }
     @Test
     public void setCheckoutViewModel() {
         Checkout_ViewModel checkoutViewModel = new Checkout_ViewModel();
@@ -92,6 +110,17 @@ public class ProcessManagerUnitTest {
         processManager.setCheckoutViewModel(checkoutViewModel);
 
         assertEquals(checkoutViewModel,processManager.getCheckoutViewModel());
+    }
+
+
+    @Test
+    public void setReceivedWeight() {
+        final boolean expectedBoolean = true;
+        processManager.setReceivedWeight(expectedBoolean);
+
+        final boolean actualBoolean = processManager.isReceivedWeight();
+
+        assertEquals(expectedBoolean,actualBoolean);
     }
     @Test
     public void weightedDishPrice(){

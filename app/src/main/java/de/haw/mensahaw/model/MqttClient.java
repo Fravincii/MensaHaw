@@ -14,8 +14,8 @@ public class MqttClient {
     public Mqtt3AsyncClient getClient() {return client;}
 
     public void connectToBroker(String identifier, String host, int port, String username,  String password) {
-        if(client == null) client = com.hivemq.client.mqtt.MqttClient.builder().useMqttVersion3().identifier(identifier).serverHost(host)
-                                                  .serverPort(port).buildAsync();
+        if(client == null) setClient(com.hivemq.client.mqtt.MqttClient.builder().useMqttVersion3().identifier(identifier).serverHost(host)
+                                                  .serverPort(port).buildAsync());
 
         client.connectWith().simpleAuth().username(username).password(password.getBytes()).applySimpleAuth().send()
               .whenComplete((connAck, throwable) -> {

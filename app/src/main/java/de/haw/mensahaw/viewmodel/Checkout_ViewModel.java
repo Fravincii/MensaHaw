@@ -21,12 +21,14 @@ public class Checkout_ViewModel extends ViewModel  {
         processManager.setCheckoutViewModel(this);
         processManager.initMQTT();
     }
-    private final MutableLiveData<Float> dishPrice = new MutableLiveData<>();
-    private final MutableLiveData<String> dishName = new MutableLiveData<>();
+    private MutableLiveData<Float> dishPrice = new MutableLiveData<>();
 
-    public void openPlatePromptView(){
-        checkoutActivity.openStartView();
-    }
+    public void setDishPrice(MutableLiveData<Float> dishPrice) {this.dishPrice = dishPrice;}
+    public void setDishName(MutableLiveData<String> dishName) {this.dishName = dishName;}
+
+    private MutableLiveData<String> dishName = new MutableLiveData<>();
+
+    public void openPlatePromptView(){checkoutActivity.openStartView();}
     public void showCheckout(){checkoutActivity.runOnUiThread(() -> checkoutActivity.quitLoadingScreen());}
 
     public void setPriceInView(float price) {this.dishPrice.postValue(price);}

@@ -22,8 +22,12 @@ public class MensaApplicationUnitTest {
 
     @Test
     public void onCreate(){
+        mensaApplication = mock(mensaApplication.getClass());
+
+        mensaApplication.setDatabase(null);
         mensaApplication.onCreate();
         final Database expectedDatabase = mensaApplication.getDatabase();
+
         assertNotNull(expectedDatabase);
     }
     @Test

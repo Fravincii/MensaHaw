@@ -21,6 +21,7 @@ import de.haw.mensahaw.model.Database;
 import de.haw.mensahaw.model.MQTTConnectionCallback;
 import de.haw.mensahaw.model.MQTTManager;
 import de.haw.mensahaw.model.MqttClient;
+import de.haw.mensahaw.model.ProcessManager;
 import de.haw.mensahaw.model.QRCallback;
 import de.haw.mensahaw.model.ScaleCallBack;
 
@@ -29,7 +30,6 @@ public class MQTTManagerUnitTest {
     private MQTTManager mqttManager;
     private MqttClient mqttClientMock;
     private Database databaseMock;
-    private Log log;
     @Before
     public void init(){
         mqttManager = new MQTTManager();
@@ -134,6 +134,7 @@ public class MQTTManagerUnitTest {
         verify(mqttClientMock).subscribe(eq(topic), any());
 
     }
+
     @Test
     public void subscribeToQRCode(){
         final String topic = databaseMock.QRSCANNER_QRCODE;
