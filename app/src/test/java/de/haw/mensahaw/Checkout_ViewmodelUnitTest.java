@@ -2,7 +2,7 @@ package de.haw.mensahaw;
 
 import static org.junit.Assert.assertEquals;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
@@ -19,7 +19,7 @@ public class Checkout_ViewmodelUnitTest {
         checkoutViewModel = new Checkout_ViewModel();
     }
     @Test
-    public void getProcessmanager(){
+    public void getting_Processmanager_intoViewModel(){
         final ProcessManager expectedProcessManager = mock(ProcessManager.class);
 
         checkoutViewModel.setProcessManager(expectedProcessManager);
@@ -28,7 +28,7 @@ public class Checkout_ViewmodelUnitTest {
         assertEquals(expectedProcessManager,actualProcessManager);
     }
     @Test
-    public void getCheckoutView(){
+    public void check_thatSwitchedView_isCheckoutView(){
         final CheckoutActivity expectedCheckoutActivity = mock(CheckoutActivity.class);
 
         checkoutViewModel.setCheckoutActivity(expectedCheckoutActivity);
@@ -37,7 +37,7 @@ public class Checkout_ViewmodelUnitTest {
         assertEquals(expectedCheckoutActivity,actualCheckoutActivity);
     }
     @Test
-    public void initMQTT(){
+    public void check_thatMQTT_isInitialised(){
         final ProcessManager mockedProcessManager = mock(ProcessManager.class);
         checkoutViewModel.setProcessManager(mockedProcessManager);
         checkoutViewModel.initMQTT();
@@ -46,7 +46,7 @@ public class Checkout_ViewmodelUnitTest {
         verify(mockedProcessManager).initMQTT();
     }
     @Test
-    public void openPlatePromptView(){
+    public void check_thatSwitchedView_isPlatePromptView(){
         final CheckoutActivity mockedCheckoutActivity = mock(CheckoutActivity.class);
         checkoutViewModel.setCheckoutActivity(mockedCheckoutActivity);
         checkoutViewModel.openPlatePromptView();
@@ -54,20 +54,18 @@ public class Checkout_ViewmodelUnitTest {
         verify(mockedCheckoutActivity).openStartView();
     }
     @Test
-    public void showCheckout(){
+    public void whenCheckoutStart_thenShowCheckout(){
         final CheckoutActivity mockedCheckoutActivity = mock(CheckoutActivity.class);
        checkoutViewModel.setCheckoutActivity(mockedCheckoutActivity);
         checkoutViewModel.showCheckout();
 
         verify(mockedCheckoutActivity).quitLoadingScreen();
     }
-
-    //TODO: MutableLiveData
     @Test
-    public void get_dishName(){
-       /* MutableLiveData<String> expectedResult = mock(MutableLiveData.class);
-        String expectedString = "Döner";
-        expectedResult.postValue(expectedString);
+    public void givenliveDishname_isActualDishname(){
+        Checkout_ViewModel checkoutViewModel = new Checkout_ViewModel();
+        MutableLiveData<String> expectedResult = mock(MutableLiveData.class);
+        expectedResult.postValue("Döner");
 
         checkoutViewModel.setDishName(expectedResult);
         checkoutViewModel.setDishNameInView("Döner");

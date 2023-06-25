@@ -1,16 +1,14 @@
 package de.haw.mensahaw;
 
 import org.junit.Test;
-import org.mockito.*;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import de.haw.mensahaw.model.Dish;
 
 public class DishUnitTests {
     @Test
-    public void Init_givenName_equalsName() {
+    public void initialised_givenDishName_equalsActualDishName() {
         String nameOfDish = "Nudeln";
 
         Dish dish = new Dish(nameOfDish, 0.5f);
@@ -19,7 +17,7 @@ public class DishUnitTests {
     }
 
     @Test
-    public void Init_givenPrice_equalsPrice() {
+    public void initialised_givenPrice_equalsActualPrice() {
         String nameOfDish = "Nudeln";
         float priceOfDish = 0.5f;
 
