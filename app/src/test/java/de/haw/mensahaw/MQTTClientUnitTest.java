@@ -6,27 +6,15 @@ import org.junit.Test;
 
 import de.haw.mensahaw.model.Database;
 import de.haw.mensahaw.model.MQTTConnectionCallback;
-import de.haw.mensahaw.model.MQTTManager;
-import de.haw.mensahaw.model.MensaApplication;
 import de.haw.mensahaw.model.MqttClient;
-import de.haw.mensahaw.model.ProcessManager;
+
 import static org.junit.Assert.*;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
-import com.hivemq.client.mqtt.mqtt3.message.publish.Mqtt3Publish;
-import com.hivemq.client.mqtt.mqtt3.message.subscribe.Mqtt3SubscribeBuilder;
-import com.hivemq.client.mqtt.mqtt3.message.subscribe.suback.Mqtt3SubAck;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import java.util.function.Consumer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MQTTClientUnitTest {
@@ -38,7 +26,7 @@ public class MQTTClientUnitTest {
         mqttClient = new MqttClient();
     }
     @Test
-    public void connectToBroker(){
+    public void connectToBroker(){ //TODO nichts drinn
         final Mqtt3AsyncClient mqtt3AsyncClientMock = mock(Mqtt3AsyncClient.class);
         mqttClient.setClient(mqtt3AsyncClientMock);
         final MQTTConnectionCallback mqttConnectionCallbackMock = mock(MQTTConnectionCallback.class);
@@ -57,7 +45,7 @@ public class MQTTClientUnitTest {
                 .whenComplete(any());*/
     }
     @Test
-    public void subscribe(){
+    public void subscribe(){ //TODO Kaputt
         final Mqtt3AsyncClient mqtt3AsyncClientMock = mock(Mqtt3AsyncClient.class);
 
         mqttClient.setClient(mqtt3AsyncClientMock);
@@ -71,7 +59,7 @@ public class MQTTClientUnitTest {
     }
 
     @Test
-    public void setClient(){
+    public void setting_Client(){
 
         Mqtt3AsyncClient predictedMockedMQTT3AsyncClient = mock(Mqtt3AsyncClient.class);
         mqttClient.setClient(predictedMockedMQTT3AsyncClient);
@@ -89,7 +77,7 @@ public class MQTTClientUnitTest {
         assertEquals(expectedMockedMQTTConnectionCallback, actualMQTTConnectionCallback);
     }
     @Test
-    public void setMQTTConnectionCallback1(){
+    public void setMQTTConnectionCallback_thenRemoveMQTTConnectionCallback(){
         MQTTConnectionCallback expectedMockedMQTTConnectionCallback = mock(MQTTConnectionCallback.class);
 
         mqttClient.setMqttConnectionCallback(expectedMockedMQTTConnectionCallback);

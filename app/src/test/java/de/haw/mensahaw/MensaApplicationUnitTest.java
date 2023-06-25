@@ -9,8 +9,6 @@ import de.haw.mensahaw.model.MensaApplication;
 import de.haw.mensahaw.model.ProcessManager;
 import static org.junit.Assert.*;
 
-import android.app.Application;
-
 import org.junit.*;
 public class MensaApplicationUnitTest {
 
@@ -21,7 +19,7 @@ public class MensaApplicationUnitTest {
     }
 
     @Test
-    public void onCreate(){
+    public void test_startingOnCreate(){
         mensaApplication = mock(mensaApplication.getClass());
 
         mensaApplication.setDatabase(null);
@@ -31,7 +29,7 @@ public class MensaApplicationUnitTest {
         assertNotNull(expectedDatabase);
     }
     @Test
-    public void onCreate1(){
+    public void startOncreate_equalsLaterOncreate(){
         final Database expectedDatabase = new Database();
         mensaApplication.setDatabase(expectedDatabase);
         mensaApplication.onCreate();
@@ -40,7 +38,7 @@ public class MensaApplicationUnitTest {
         assertEquals(expectedDatabase, actualDatabase);
     }
     @Test
-    public void initProcess(){
+    public void process_initialised(){
         ProcessManager processManagerMock = mock(ProcessManager.class);
         Database databaseMock = mock(Database.class);
 
@@ -52,7 +50,7 @@ public class MensaApplicationUnitTest {
         verify(processManagerMock).setDatabase(any(Database.class));
     }
     @Test
-    public void setProcessManager(){
+    public void whenProcessManagerCreate_thenProcessManagerCreated(){
         ProcessManager processManager = new ProcessManager();
 
         mensaApplication.setProcessManager(processManager);
@@ -61,7 +59,7 @@ public class MensaApplicationUnitTest {
 
     }
     @Test
-    public void setDatabase(){
+    public void whenDatabaseCreate_thenDatabaseCreated(){
         Database database = new Database();
 
         mensaApplication.setDatabase(database);

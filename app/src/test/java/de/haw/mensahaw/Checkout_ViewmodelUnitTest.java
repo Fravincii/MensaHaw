@@ -73,6 +73,6 @@ public class Checkout_ViewmodelUnitTest {
 
         String actualResult = checkoutViewModel.getDishName().getValue().toString();
 
-        assertEquals(expectedString,actualResult);*/
+        assertEquals(expectedResult.toString(),actualResult);
     }
 }
