@@ -26,7 +26,7 @@ public class MQTTManager {
         this.database = database;
     }
 
-    private boolean connectToOnlineServer = false;
+    private boolean connectToOnlineServer = true;
     public void setConnectToOnlineServer(boolean connectToOnlineServer) {this.connectToOnlineServer = connectToOnlineServer;}
 
     public void connectToServer(){
